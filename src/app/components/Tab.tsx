@@ -11,10 +11,10 @@ interface TabProps {
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => {
   return (
     <button
-      className={`px-6 py-3 text-lg font-semibold border-2 border-green-400 rounded-sm transition-all duration-200 transform
+      className={`px-6 py-3 text-lg font-semibold border-2 border-red-400 rounded-sm transition-all duration-200 transform
         ${isActive
-          ? ' bg-black text-green-400 shadow-md shadow-green-600 animate-pulse-glow'
-          : 'text-gray-400 hover:bg-green-500 hover:text-black'}
+          ? ' bg-black text-red-400 shadow-md shadow-red-600 animate-pulse-glow'
+          : 'text-gray-400 hover:bg-red-500 hover:text-black'}
       `}
       onClick={onClick}
     >

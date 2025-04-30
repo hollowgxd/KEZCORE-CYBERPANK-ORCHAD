@@ -24,8 +24,8 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono">
-      <header className="bg-black text-green-400 py-4 px-8 border-b-2 border-green-600">
+    <div className="min-h-screen bg-url(cyberorchad) text-red-400 font-mono ">
+      <header className="bg-black text-red-400 py-4 px-8 border-b-2 border-red-600">
         <div className="container mx-auto flex justify-center space-x-8">
           <Tab label="Куры" isActive={activeTab === 'chickens'} onClick={() => setActiveTab('chickens')} />
           <Tab label="Клетки" isActive={activeTab === 'cages'} onClick={() => setActiveTab('cages')} />
