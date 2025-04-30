@@ -1,0 +1,26 @@
+import { PrismaClient } from '@prisma/client'
+import { NextResponse } from 'next/server'
+const prisma = new PrismaClient()
+export async function POST(req: Request) {
+    const body = await req.json()
+    const { name, passportData, salary } = body
+  
+    if (!name || !passportData || !salary) {
+      return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+    }
+  
+    const worker = await prisma.worker.create({
+      data: { name, passportData, salary },
+    })
+  
+    return NextResponse.json(worker, { status: 201 })
+  }
+  
+  export async function GET() {
+    const workers = await prisma.worker.findMany({
+      include: { cages: { include: { cage: true } } },
+    })
+  
+    return NextResponse.json(workers)
+  }
+  
