@@ -17,6 +17,10 @@ type Chicken = {
 const ChickenInfo = () => {
   const [chickens, setChickens] = useState<Chicken[]>([])
   const [loading, setLoading] = useState(true)
+  const [filteredChickens, setFilteredChickens] = useState<Chicken[]>([])
+  const [selectedBreed, setSelectedBreed] = useState<string>('')
+  const visibleChickens = selectedBreed ? filteredChickens : chickens
+  const [averageEggRateByCage, setAverageEggRateByCage] = useState<number | null>(null)
 
   const [formData, setFormData] = useState({
     id: null as number | null,
@@ -31,23 +35,36 @@ const ChickenInfo = () => {
 
   useEffect(() => {
     fetchChickens()
+    fetchAverageEggsByCage()
   }, [])
   const [avgWeight, setAvgWeight] = useState('')
   const [avgAge, setAvgAge] = useState('')
   const [averageResult, setAverageResult] = useState<number | null>(null)
   
   const fetchAverageEggs = async () => {
-    console.log(JSON.stringify(chickens, null, 2))
-
-    if (!avgWeight || !avgAge) return
+    if (!avgWeight && !avgAge) return
+  
+    const params = new URLSearchParams()
+    if (avgWeight) params.append('weight', avgWeight)
+    if (avgAge) params.append('age', avgAge)
   
     try {
-      const res = await fetch(`/api/stats?weight=${avgWeight}&age=${avgAge}`)
+      const res = await fetch(`/api/stats?${params.toString()}`)
       const data = await res.json()
       setAverageResult(data.average)
     } catch (error) {
       console.error('Ошибка при получении среднего:', error)
       setAverageResult(null)
+    }
+  }
+  const fetchAverageEggsByCage = async () => {
+    try {
+      const res = await fetch('/api/stats') // Без фильтров по возрасту или весу
+      const data = await res.json()
+      setAverageEggRateByCage(data.average) // Получаем среднюю яйценоскость по всем курицам
+    } catch (error) {
+      console.error('Ошибка при получении средней яйценоскости по цеху:', error)
+      setAverageEggRateByCage(null)
     }
   }
   
@@ -62,7 +79,15 @@ const ChickenInfo = () => {
       setLoading(false)
     }
   }
-
+  const handleFilter = (breed: string) => {
+    setSelectedBreed(breed)
+    if (breed) {
+      const filtered = chickens.filter((chicken) => chicken.breed === breed)
+      setFilteredChickens(filtered)
+    } else {
+      setFilteredChickens(chickens) // Если фильтра нет, показываем всех
+    }
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -135,7 +160,9 @@ const ChickenInfo = () => {
       <div className="bg-black text-red-400 p-6 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex-1">
         <h2 className="text-3xl font-bold mb-4">Сведения о Курицах</h2>
         <p className="text-gray-300 mb-4">
-          Все курицы зарегистрированы в системе. Пожалуйста, используйте команды для взаимодействия.
+          Все курицы зарегистрированы в системе. Пожалуйста, используйте меню для взаимодействия.  <br/> <br/>
+
+          Принимайте в учет при заведении, что порода курицы определяет также и ее роль в производстве (несушка, бройлер, инкубатор).
         </p>
 
         {/* 🔘 Форма */}
@@ -184,43 +211,79 @@ const ChickenInfo = () => {
           />
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+            className="bg-black py-4 px-8 border-2 text-semibold text-xl border-red-600 hover:bg-red-700 hover:text-black text-gray-400 px-4 py-2 rounded"
           >
             {isEditing ? 'Обновить' : 'Добавить'}
           </button>
         </form>
+        <div className="mb-6 w-full">
+  <h3 className="text-xl font-semibold text-red-400 mb-4 ">Фильтр по породам</h3>
+  <div className="grid grid-cols-4 gap-4">
+    {[
+      { name: 'Cyclositus-B', img: '/cyclositus.webp' },
+      { name: 'Ovexiron', img: '/ovexiron.webp' },
+      { name: 'Hatracs', img: '/hatracs.png' },
+    ].map(({ name, img }) => (
+      <button
+        key={name}
+        onClick={() => handleFilter(name)}
+        className={`w-full aspect-[4/3] overflow-hidden rounded-lg border-2 hover:border-red-500 transition-all duration-200 transform font-semibold
+          ${selectedBreed === name ? 'border-red-600 bg-red-800 animate-pulse-glow-delayed ' : 'border-gray-700 hover:bg-gray-800'}`}
+      >
+        <img
+          src={img}
+          alt={name}
+          className="w-full h-full object-cover"
+        />
+      </button>
+    ))}
+
+    {/* Сброс фильтра */}
+    <button
+      onClick={() => handleFilter('')}
+      className="w-full aspect-[4/3] overflow-hidden rounded-lg border-2 border-gray-600 hover:bg-gray-700 transition flex items-center justify-center"
+    >
+      <span className="text-white text-5xl">×</span>
+    </button>
+  </div>
+</div>
+
+
 
         {/* 🐔 Список кур */}
         {loading ? (
           <p className="text-gray-400">Загрузка данных...</p>
         ) : (
           <ul className="space-y-2 mb-6">
-            {chickens.map((chicken, index) => (
-              <li
-                key={chicken.id}
-                className="text-sm text-gray-300 border border-red-600 rounded-lg p-3 flex justify-between items-center"
-              >
-                <p>
-                  <span className="text-red-400 font-semibold">#{index+1}</span> — порода{' '}
-                  <span className="text-white">{chicken.breed}</span>, {chicken.age} дней,{' '}
-                  {chicken.weight} кг, {chicken.eggRate} яиц/день, клетка #{chicken.cage.id}
-                </p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(chicken)}
-                    className="text-sm bg-yellow-600 hover:bg-yellow-700 px-3 py-1 rounded text-white"
-                  >
-                    Редактировать
-                  </button>
-                  <button
-                    onClick={() => handleDelete(chicken.id)}
-                    className="text-sm bg-red-700 hover:bg-red-800 px-3 py-1 rounded text-white"
-                  >
-                    Удалить
-                  </button>
-                </div>
-              </li>
-            ))}
+            {visibleChickens.map((chicken, index) => {
+              const isUnderperforming = averageEggRateByCage && chicken.eggRate < averageEggRateByCage;
+              return (
+                <li
+                  key={chicken.id}
+                  className="text-sm text-gray-300 border border-red-600 rounded-lg p-3 flex justify-between items-center"
+                >
+                  <p>
+                    <span className="text-red-400 font-semibold">#{index + 1}</span> — порода{' '}
+                    <span className="text-red-500 text-xl">{chicken.breed}</span>, {chicken.age} дней,{' '}
+                    {chicken.weight} кг, {chicken.eggRate} яиц/день, отсек #{chicken.cage.id}
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(chicken)}
+                      className="bg-black py-4 px-8 border-2 text-bold text-l border-red-600 hover:bg-red-700 hover:text-black - text-gray-400 px-4 py-2 rounded transition-all duration-200 transform font-semibold"
+                    >
+                      Редактировать
+                    </button>
+                    <button
+                      onClick={() => handleDelete(chicken.id)}
+                      className={`text-sm px-3 py-1 rounded transition-all duration-200 transform font-semibold min-w-[130px]
+                      ${isUnderperforming ? 'bg-red-800 animate-pulse-glow text-white' : 'bg-red-700 hover:bg-red-800 text-white'}`}> {isUnderperforming ? 'УТИЛИЗИРОВАТЬ' : 'Удалить'}
+                    </button>
+
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
 
@@ -244,7 +307,7 @@ const ChickenInfo = () => {
     />
     <button
       onClick={fetchAverageEggs}
-      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+      className="bg-black py-4 border-red-600 px-8 border-2 hover:bg-red-700 hover:text-black - text-gray-400 px-4 py-2 rounded transition-all duration-200 transform font-semibold"
     >
       Показать
     </button>
@@ -252,7 +315,7 @@ const ChickenInfo = () => {
 
   {averageResult !== null && (
     <div className="text-gray-300 mt-2">
-      Среднее количество яиц для веса {avgWeight} кг и возраста {avgAge} дней:{" "}
+      Среднее количество яиц по весу {avgWeight} кг и возрасту {avgAge} дней:{" "}
       
       <span className="text-white font-semibold">{averageResult.toFixed(2)} яиц</span>
     </div>

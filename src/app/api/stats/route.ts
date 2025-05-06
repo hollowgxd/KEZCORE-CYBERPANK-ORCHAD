@@ -5,22 +5,35 @@ const prisma = new PrismaClient()
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const weight = parseFloat(searchParams.get('weight') || '')
-  const age = parseInt(searchParams.get('age') || '')
+  const weightParam = searchParams.get('weight')
+  const ageParam = searchParams.get('age')
 
-  if (isNaN(weight) || isNaN(age)) {
-    return NextResponse.json({ error: 'Invalid weight or age' }, { status: 400 })
-  }
+  const weight = weightParam ? parseFloat(weightParam) : null
+  const age = ageParam ? parseInt(ageParam) : null
+
+
+  // if (!weight && !age) {
+  //   return NextResponse.json({ error: 'At least one of weight or age must be provided' }, { status: 400 })
+  // }
 
   const chickens = await prisma.chicken.findMany({
     where: {
-      weight: {
-        gte: weight - 0.05,
-        lte: weight + 0.05,
-      },
-      age,
+      ...(weight !== null && {
+        weight: {
+          gte: weight - 3,
+          lte: weight + 3,
+        },
+      }),
+      ...(age !== null && {
+        age: { 
+          gte: age - 3,
+          lte: age + 3,
+        },
+      }),
     },
   })
+  
+
 
   const totalRate = chickens.reduce((sum, chicken) => sum + chicken.eggRate, 0)
   const average = chickens.length > 0 ? totalRate / chickens.length : 0

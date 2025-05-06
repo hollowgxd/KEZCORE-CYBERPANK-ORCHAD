@@ -54,11 +54,17 @@ model WorkerCage {
 }
 
 model EggEntry {
-  id         Int       @id @default(autoincrement())
-  date       DateTime
-  eggsLaid   Int
-  chicken    Chicken   @relation(fields: [chickenId], references: [id])
-  chickenId  Int
+  id          Int       @id @default(autoincrement())
+  date        DateTime
+  eggsLaid    Int
+  type        EggType   @default(STANDARD) // Новое поле: enum
+  chicken     Chicken   @relation(fields: [chickenId], references: [id])
+  chickenId   Int
 
   @@map("egg_entries")
+}
+enum EggType {
+  STANDARD
+  PREMIUM
+  ORGANIC
 }
