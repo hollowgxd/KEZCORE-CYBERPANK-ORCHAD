@@ -16,7 +16,9 @@ const WorkerInfo = () => {
       <div className="bg-black text-red-400 p-6 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex-1">
         <h2 className="text-3xl font-bold mb-4">Сведения о Работниках</h2>
         <p className="text-gray-300">
-          Информация о текущем обслуживании куриц и яйценоскости.
+          Информация о текущем обслуживании куриц и яйценоскости. Пожалуйста, используйте меню для взаимодействия.<br></br><br></br>
+
+          
         </p>
       </div>
     </div>

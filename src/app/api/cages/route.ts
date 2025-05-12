@@ -3,21 +3,6 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function POST(req: Request) {
-  const body = await req.json()
-  const { id } = body
-
-  if (!id) {
-    return NextResponse.json({ error: 'Missing cage ID' }, { status: 400 })
-  }
-
-  const cage = await prisma.cage.create({
-    data: { id },
-  })
-
-  return NextResponse.json(cage, { status: 201 })
-}
-
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const cageIdParam = searchParams.get('cageId')
@@ -25,11 +10,14 @@ export async function GET(req: Request) {
 
   try {
     if (cageId) {
+      // Получение информации по конкретной клетке
       const cage = await prisma.cage.findUnique({
         where: { id: cageId },
         include: {
           chicken: {
-            include: { eggEntries: true },
+            include: {
+              eggEntries: true,
+            },
           },
           workers: true,
         },
@@ -55,6 +43,7 @@ export async function GET(req: Request) {
         chickensWithLastEggCollection,
       })
     } else {
+      // Получение всех клеток
       const cages = await prisma.cage.findMany({
         include: { chicken: true, workers: true },
       })
@@ -64,51 +53,6 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error('Ошибка при запросе данных:', error)
     return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
-  }
-}
-
-export async function PUT(req: Request) {
-  const body = await req.json()
-  const { id, data } = body
-
-  if (!id || !data) {
-    return NextResponse.json({ error: 'Missing cage ID or data' }, { status: 400 })
-  }
-
-  try {
-    const updatedCage = await prisma.cage.update({
-      where: { id },
-      data,
-    })
-
-    return NextResponse.json(updatedCage)
-  } catch (error) {
-    console.error('Ошибка при обновлении клетки:', error)
-    return NextResponse.json({ error: 'Cage update failed' }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
-  }
-}
-
-export async function DELETE(req: Request) {
-  const body = await req.json()
-  const { id } = body
-
-  if (!id) {
-    return NextResponse.json({ error: 'Missing cage ID' }, { status: 400 })
-  }
-
-  try {
-    await prisma.cage.delete({
-      where: { id },
-    })
-
-    return NextResponse.json({ message: `Cage ${id} deleted successfully` })
-  } catch (error) {
-    console.error('Ошибка при удалении клетки:', error)
-    return NextResponse.json({ error: 'Cage deletion failed' }, { status: 500 })
   } finally {
     await prisma.$disconnect()
   }

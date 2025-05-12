@@ -48,7 +48,12 @@ const CageInfo = () => {
         <div className="bg-black text-red-400 p-6 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex-1">
           <h2 className="text-3xl font-bold mb-4">Сведения об отсеках</h2>
           <p className="text-gray-300">
-            Количество отсеков: <span className="text-white font-semibold">{cages.length}</span>
+          Информация о зарегистрированных в системе клетках. Пожалуйста, используйте меню для взаимодействия.<br></br> <br></br> 
+          
+          Клетка в которой находится курица с самым большим показателем снесенных яиц, будет помечаться.
+
+          <br></br> <br></br> <br></br> 
+          Текущее количество отсеков: <span className="text-white font-semibold ">{cages.length}</span>
           </p>
 
           <div className="flex flex-row flex-wrap justify-center items-start gap-6 lg:gap-12 py-16 px-2 lg:px-0 max-w-screen-2xl mx-auto">
@@ -64,7 +69,7 @@ const CageInfo = () => {
                   <div className="h-48 w-full overflow-hidden border-b-2 border-red-600">
                     <img
                       src="/cybercageinit.webp"
-                      alt={`Отсек ${cage.id}`}
+                      alt=""
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -72,6 +77,7 @@ const CageInfo = () => {
                   {/* Информация по отсеку */}
                   <div className="p-4 flex flex-col gap-2">
                     <h3 className="text-xl font-semibold">Отсек #{cage.id}</h3>
+                    
                     <p className="text-gray-300">
                       <span className="font-semibold">Куриц:</span> {cage.chicken.length} шт.
                     </p>
