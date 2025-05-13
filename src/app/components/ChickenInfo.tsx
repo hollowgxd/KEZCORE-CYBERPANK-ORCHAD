@@ -150,7 +150,7 @@ const ChickenInfo = () => {
       {/* Картинка слева */}
       <div className="bg-black text-red-400 p-4 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex justify-center items-center max-h-[467px] overflow-hidden">
         <img
-          src="/cyberchickinit.webp"
+          src="/zloy/cyberchickinit.webp"
           alt="Петушок"
           className="h-full max-h-[467px] w-auto object-contain shadow-lg rounded-lg"
         />
@@ -215,7 +215,7 @@ const ChickenInfo = () => {
           />
           <button
             type="submit"
-            className="bg-black py-4 px-8 border-2 text-semibold text-xl border-red-600 hover:bg-red-700 hover:text-black text-gray-400 px-4 py-2 rounded"
+            className="bg-black py-4 px-8 border-2 text-semibold text-xl border-red-600 hover:bg-red-700 hover:text-black text-gray-400 px-4 py-2 rounded transition-all duration-200 transform"
           >
             {isEditing ? 'Обновить' : 'Добавить'}
           </button>
@@ -224,10 +224,10 @@ const ChickenInfo = () => {
   <h3 className="text-xl font-semibold text-red-400 mb-4 ">Фильтр по породам</h3>
   <div className="grid grid-cols-4 gap-4">
     {[
-      { name: 'Cyclositus-B', img: '/cyclositus.webp' },
-      { name: 'Ovexiron', img: '/ovexiron.webp' },
-      { name: 'Hatracs', img: '/hatracs.webp' },
-      { name: '', img: '/stopsign.webp' }
+      { name: 'Cyclositus-B', img: '/zloy/cyclositus.webp' },
+      { name: 'Ovexiron', img: '/zloy/ovexiron.webp' },
+      { name: 'Hatracs', img: '/zloy/hatracs.webp' },
+      { name: '', img: '/zloy/stopsign.webp' }
     ].map(({ name, img }) => (
       <button
         key={name}

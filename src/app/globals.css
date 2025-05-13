@@ -26,7 +26,7 @@
 
 body {
   background: var(--background); 
-  background-image: url('/cyberorchad.webp'); /* Покрывает весь экран */
+  background-image: url('/zloy/cyberorchad.webp'); /* Покрывает весь экран */
   background-position: center center; /* Центрирует изображение */
   color: var(--foreground); /* Сохраняем цвет текста */
   font-family: var(--font-sans);;

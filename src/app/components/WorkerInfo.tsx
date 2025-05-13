@@ -6,7 +6,7 @@ const WorkerInfo = () => {
       {/* Картинка слева (пока временная) */}
       <div className="bg-black text-red-400 p-4 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex justify-center items-center max-h-[467px] overflow-hidden">
         <img
-          src="/cyberworkerinit.webp" // Заменишь на изображение работника
+          src="/zloy/cyberworkerinit.webp" // Заменишь на изображение работника
           alt="Работник"
           className="h-full max-h-[467px] w-auto object-contain shadow-lg rounded-lg"
         />

@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Chicken {
+  id         Int        @id @default(autoincrement())
+  weight     Float
+  age        Int
+  eggRate    Float
+  breed      String
+  cage       Cage       @relation(fields: [cageId], references: [id])
+  cageId     Int
+  eggEntries EggEntry[]
+
+  @@map("chickens")
+}
+
+model Cage {
+  id      Int          @id @default(autoincrement())
+  chicken Chicken[] // может быть пустой
+  workers WorkerCage[]
+
+  @@map("cages")
+}
+
+model Worker {
+  id     Int          @id @default(autoincrement())
+  name   String
+  salary Float
+  cages  WorkerCage[]
+
+  @@map("workers")
+}
+
+model WorkerCage {
+  worker   Worker @relation(fields: [workerId], references: [id])
+  workerId Int
+  cage     Cage   @relation(fields: [cageId], references: [id])
+  cageId   Int
+
+  @@id([workerId, cageId])
+  @@map("worker_cages")
+}
+
+model EggEntry {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  eggsLaid  Int
+  type      EggType  @default(STANDARD) // Новое поле: enum
+  chicken   Chicken  @relation(fields: [chickenId], references: [id])
+  chickenId Int
+
+  @@map("egg_entries")
+}
+
+enum EggType {
+  STANDARD
+  PREMIUM
+  ORGANIC
+}

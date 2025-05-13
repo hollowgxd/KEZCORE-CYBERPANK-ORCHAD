@@ -74,7 +74,91 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error('Ошибка при запросе данных:', error);
     return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
+  } 
+
+}
+export async function POST(req: Request) {
+  const data = await req.json();
+  const { chicken = [], workers = [] } = data;
+
+  try {
+    const newCage = await prisma.cage.create({
+      data: {
+        chicken: {
+          create: chicken.map((c: { eggRate: number }) => ({
+            eggRate: c.eggRate,
+          })),
+        },
+        workers: {
+          create: workers.map((w: any) => w), // предполагается, что worker имеет хотя бы name
+        },
+      },
+      include: {
+        chicken: true,
+        workers: true,
+      },
+    });
+
+    return NextResponse.json(newCage, { status: 201 });
+  } catch (err) {
+    console.error('Ошибка при создании клетки:', err);
+    return NextResponse.json({ error: 'Ошибка при создании клетки' }, { status: 500 });
+  }
+}
+
+export async function PUT(req: Request) {
+  const data = await req.json();
+  const { id, chicken = [], workers = [] } = data;
+
+  if (!id) {
+    return NextResponse.json({ error: 'ID клетки обязателен' }, { status: 400 });
+  }
+
+  try {
+    // Удаляем старых кур и работников (зависимые сущности), чтобы добавить новые
+    await prisma.chicken.deleteMany({ where: { cageId: id } });
+    await prisma.worker.deleteMany({ where: { id: id } });
+
+    const updatedCage = await prisma.cage.update({
+      where: { id },
+      data: {
+        chicken: {
+          create: chicken.map((c: { eggRate: number }) => ({
+            eggRate: c.eggRate,
+          })),
+        },
+        workers: {
+          create: workers.map((w: any) => w),
+        },
+      },
+      include: {
+        chicken: true,
+        workers: true,
+      },
+    });
+
+    return NextResponse.json(updatedCage);
+  } catch (err) {
+    console.error('Ошибка при обновлении клетки:', err);
+    return NextResponse.json({ error: 'Ошибка при обновлении клетки' }, { status: 500 });
+  }
+}
+
+
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
+
+  if (!id) {
+    return NextResponse.json({ error: 'ID клетки обязателен' }, { status: 400 });
+  }
+
+  try {
+    await prisma.cage.delete({
+      where: { id },
+    });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Ошибка при удалении клетки:', err);
+    return NextResponse.json({ error: 'Ошибка при удалении клетки' }, { status: 500 });
   }
 }

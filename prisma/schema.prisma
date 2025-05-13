@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -27,7 +28,7 @@ model Chicken {
 }
 
 model Cage {
-  id        Int        @id
+  id        Int        @id @default(autoincrement())
   chicken   Chicken[]   // может быть пустой
   workers   WorkerCage[]
 
