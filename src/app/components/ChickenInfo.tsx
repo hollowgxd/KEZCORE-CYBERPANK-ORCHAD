@@ -164,7 +164,7 @@ const ChickenInfo = () => {
 
           Вы можете быстро выбрать для отображения куриц нужной вам породы, для этого нажмите на изображение с курицей интересующей породы. <br/> <br/>
 
-          Система помогает вам вычислять куриц с яйценоскостью ниже среднего, если вас не устраивает производительность этой особи - УТИЛИЗИРУЙТЕ ее.<br/> <br/>
+          Система помогает вам вычислять куриц с яйценоскостью ниже среднего значения по цеху, если вас не устраивает производительность этой особи - <span className="text-red-400 font-semibold"> УТИЛИЗИРУЙТЕ </span> ее <br/> <br/>
 
           Вы можете получать параметры средней яйценоскости куриц с примерно равным весом и возрастом, для этого воспользуйтесь фильтром внизу списка.
         </p>
@@ -198,7 +198,7 @@ const ChickenInfo = () => {
           />
           <input
             type="number"
-            placeholder="Яиц/день"
+            placeholder="Яиц/месяц"
             value={formData.eggRate}
             onChange={(e) => setFormData({ ...formData, eggRate: e.target.value })}
             className="w-full bg-gray-900 text-white p-2 rounded"
@@ -264,7 +264,7 @@ const ChickenInfo = () => {
                   <p>
                     <span className="text-red-400 font-semibold">#{index + 1}</span> — порода{' '}
                     <span className="text-red-500 text-xl">{chicken.breed}</span>, {chicken.age} дней,{' '}
-                    {chicken.weight} кг, {chicken.eggRate} яиц/день, отсек #{chicken.cage.id}
+                    {chicken.weight} кг, {chicken.eggRate} яиц/месяц, клетка #{chicken.cage.id}
                   </p>
                   <div className="flex gap-2">
                     <button
