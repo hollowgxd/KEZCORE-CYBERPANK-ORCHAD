@@ -9,140 +9,121 @@ export async function GET(req: Request) {
   const cageId = cageIdParam ? parseInt(cageIdParam) : null;
 
   try {
+    // Если передан cageId — вернуть одну клетку
     if (cageId) {
-      // По одной клетке (оставим как было)
       const cage = await prisma.cage.findUnique({
         where: { id: cageId },
         include: {
           chicken: {
             include: { eggEntries: true },
           },
-          workers: true,
+          worker: true,
         },
       });
 
       if (!cage) {
-        return NextResponse.json({ error: 'Cage not found' }, { status: 404 });
+        return NextResponse.json([], { status: 200 }); // Возвращаем пустой массив, чтобы клиент не упал
       }
 
-      const chickensWithLastEggCollection = cage.chicken.map((chicken) => {
-        const sortedEggEntries = [...(chicken.eggEntries || [])].sort((a, b) => b.date.getTime() - a.date.getTime());
-        const lastEntry = sortedEggEntries[0];
+      const eggEntries = cage.chicken?.eggEntries || [];
+      const sortedEggEntries = eggEntries.sort((a, b) => b.date.getTime() - a.date.getTime());
+      const lastEntry = sortedEggEntries[0];
 
-        return {
-          chickenId: chicken.id,
-          lastEggCollectionDate: lastEntry?.date || null,
-          eggsCollected: lastEntry?.eggsLaid || 0,
-        };
-      });
+      const result = [{
+        id: cage.id,
+        chicken: cage.chicken
+          ? {
+              id: cage.chicken.id,
+              breed: cage.chicken.breed,
+              weight: cage.chicken.weight,
+              eggRate: cage.chicken.eggRate,
+              age: cage.chicken.age,
+            }
+          : null,
+        worker: cage.worker,
+        eggsCollected: eggEntries.reduce((sum, e) => sum + e.eggsLaid, 0),
+        lastEggCollectionDate: lastEntry?.date || null,
+      }];
 
-      return NextResponse.json({
-        cage,
-        chickensWithLastEggCollection,
-      });
-    } else {
-      // Получение всех клеток + расширенные данные
-      const cages = await prisma.cage.findMany({
-        include: {
-          chicken: {
-            include: {
-              eggEntries: true,
-            },
-          },
-          workers: true,
+      return NextResponse.json(result, { status: 200 });
+    }
+
+    // Если cageId не передан — вернуть все клетки
+    const cages = await prisma.cage.findMany({
+      include: {
+        chicken: {
+          include: { eggEntries: true },
         },
+        worker: true,
+      },
+    });
+
+    const enrichedCages = cages.map((cage) => {
+      const eggEntries = cage.chicken?.eggEntries || [];
+      const sortedEggs = [...eggEntries].sort((a, b) => b.date.getTime() - a.date.getTime());
+      const totalEggs = eggEntries.reduce((sum, entry) => sum + entry.eggsLaid, 0);
+      const lastEggDate = sortedEggs[0]?.date ?? null;
+
+      return {
+        id: cage.id,
+        chicken: cage.chicken
+          ? {
+              id: cage.chicken.id,
+              breed: cage.chicken.breed,
+              age: cage.chicken.age,
+              weight: cage.chicken.weight,
+              eggRate: cage.chicken.eggRate,
+            }
+          : null,
+        worker: cage.worker,
+        eggsCollected: totalEggs,
+        lastEggCollectionDate: lastEggDate,
+      };
+    });
+
+    return NextResponse.json(enrichedCages, { status: 200 });
+  } catch (error) {
+    console.error('Ошибка при получении клеток:', error);
+    return NextResponse.json([], { status: 200 }); // Даже при ошибке — вернуть массив
+  }
+}
+
+export async function POST(req: Request) {
+  const { chickenId, workerId, cageId } = await req.json();
+
+  try {
+    if (cageId) {
+      const updateData: any = {};
+      if (chickenId) updateData.chicken = { connect: { id: chickenId } };
+      if (workerId)  updateData.worker  = { connect: { id: workerId } };
+
+      const updatedCage = await prisma.cage.update({
+        where: { id: cageId },
+        data: updateData,
       });
 
-      const enrichedCages = cages.map((cage) => {
-        const allEggs = cage.chicken.flatMap((chicken) => chicken.eggEntries || []);
-        const sortedEggs = [...allEggs].sort((a, b) => b.date.getTime() - a.date.getTime());
+      // не забудьте синхронизировать chicken.cageId, если нужно...
+      return NextResponse.json(updatedCage);
+    } else {
+      const createData: any = {};
+      if (chickenId) createData.chicken = { connect: { id: chickenId } };
+      if (workerId)  createData.worker  = { connect: { id: workerId } };
 
-        const totalEggs = allEggs.reduce((sum, entry) => sum + entry.eggsLaid, 0);
-        const lastEggDate = sortedEggs[0]?.date ?? null;
-
-        return {
-          id: cage.id,
-          chicken: cage.chicken.map(({ eggEntries, ...rest }) => rest), // Уберём eggEntries
-          workers: cage.workers,
-          eggsCollected: totalEggs,
-          lastEggCollectionDate: lastEggDate,
-        };
+      const newCage = await prisma.cage.create({
+        data: createData,
       });
 
-      return NextResponse.json(enrichedCages);
+      // синхронизировать chicken.cageId если требуется
+      return NextResponse.json(newCage, { status: 201 });
     }
   } catch (error) {
-    console.error('Ошибка при запросе данных:', error);
-    return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
-  } 
-
-}
-export async function POST(req: Request) {
-  const data = await req.json();
-  const { chicken = [], workers = [] } = data;
-
-  try {
-    const newCage = await prisma.cage.create({
-      data: {
-        chicken: {
-          create: chicken.map((c: { eggRate: number }) => ({
-            eggRate: c.eggRate,
-          })),
-        },
-        workers: {
-          create: workers.map((w: any) => w), // предполагается, что worker имеет хотя бы name
-        },
-      },
-      include: {
-        chicken: true,
-        workers: true,
-      },
-    });
-
-    return NextResponse.json(newCage, { status: 201 });
-  } catch (err) {
-    console.error('Ошибка при создании клетки:', err);
-    return NextResponse.json({ error: 'Ошибка при создании клетки' }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: 'Ошибка' }, { status: 500 });
   }
 }
 
-export async function PUT(req: Request) {
-  const data = await req.json();
-  const { id, chicken = [], workers = [] } = data;
 
-  if (!id) {
-    return NextResponse.json({ error: 'ID клетки обязателен' }, { status: 400 });
-  }
 
-  try {
-    // Удаляем старых кур и работников (зависимые сущности), чтобы добавить новые
-    await prisma.chicken.deleteMany({ where: { cageId: id } });
-    await prisma.worker.deleteMany({ where: { id: id } });
-
-    const updatedCage = await prisma.cage.update({
-      where: { id },
-      data: {
-        chicken: {
-          create: chicken.map((c: { eggRate: number }) => ({
-            eggRate: c.eggRate,
-          })),
-        },
-        workers: {
-          create: workers.map((w: any) => w),
-        },
-      },
-      include: {
-        chicken: true,
-        workers: true,
-      },
-    });
-
-    return NextResponse.json(updatedCage);
-  } catch (err) {
-    console.error('Ошибка при обновлении клетки:', err);
-    return NextResponse.json({ error: 'Ошибка при обновлении клетки' }, { status: 500 });
-  }
-}
 
 
 export async function DELETE(req: Request) {

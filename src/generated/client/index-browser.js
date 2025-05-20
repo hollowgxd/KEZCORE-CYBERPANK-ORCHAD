@@ -130,18 +130,15 @@ exports.Prisma.ChickenScalarFieldEnum = {
 };
 
 exports.Prisma.CageScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  chickenId: 'chickenId',
+  workerId: 'workerId'
 };
 
 exports.Prisma.WorkerScalarFieldEnum = {
   id: 'id',
   name: 'name',
   salary: 'salary'
-};
-
-exports.Prisma.WorkerCageScalarFieldEnum = {
-  workerId: 'workerId',
-  cageId: 'cageId'
 };
 
 exports.Prisma.EggEntryScalarFieldEnum = {
@@ -161,6 +158,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.EggType = exports.$Enums.EggType = {
   STANDARD: 'STANDARD',
   PREMIUM: 'PREMIUM',
@@ -171,7 +173,6 @@ exports.Prisma.ModelName = {
   Chicken: 'Chicken',
   Cage: 'Cage',
   Worker: 'Worker',
-  WorkerCage: 'WorkerCage',
   EggEntry: 'EggEntry'
 };
 

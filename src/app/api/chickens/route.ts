@@ -29,6 +29,10 @@ export async function POST(req: Request) {
         breed,
         cageId,
       },
+        include: {
+    cage: true,
+    eggEntries: true,
+  },
     })
 
     return NextResponse.json(chicken, { status: 201 })
@@ -80,6 +84,10 @@ export async function PUT(req: Request) {
         breed,
         cageId,
       },
+        include: {
+    cage: true,
+    eggEntries: true,
+  },
     })
 
     return NextResponse.json(chicken)
@@ -99,9 +107,14 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: 'Missing chicken ID' }, { status: 400 })
     }
 
-    await prisma.chicken.delete({
-      where: { id },
-    })
+    await prisma.eggEntry.deleteMany({
+  where: { chickenId: id },
+})
+
+await prisma.chicken.delete({
+  where: { id },
+})
+
 
     return NextResponse.json({ message: 'Chicken deleted' }, { status: 200 })
   } catch (error) {

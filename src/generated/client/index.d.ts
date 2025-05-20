@@ -29,11 +29,6 @@ export type Cage = $Result.DefaultSelection<Prisma.$CagePayload>
  */
 export type Worker = $Result.DefaultSelection<Prisma.$WorkerPayload>
 /**
- * Model WorkerCage
- * 
- */
-export type WorkerCage = $Result.DefaultSelection<Prisma.$WorkerCagePayload>
-/**
  * Model EggEntry
  * 
  */
@@ -211,16 +206,6 @@ export class PrismaClient<
     * ```
     */
   get worker(): Prisma.WorkerDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.workerCage`: Exposes CRUD operations for the **WorkerCage** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more WorkerCages
-    * const workerCages = await prisma.workerCage.findMany()
-    * ```
-    */
-  get workerCage(): Prisma.WorkerCageDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.eggEntry`: Exposes CRUD operations for the **EggEntry** model.
@@ -674,7 +659,6 @@ export namespace Prisma {
     Chicken: 'Chicken',
     Cage: 'Cage',
     Worker: 'Worker',
-    WorkerCage: 'WorkerCage',
     EggEntry: 'EggEntry'
   };
 
@@ -694,7 +678,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chicken" | "cage" | "worker" | "workerCage" | "eggEntry"
+      modelProps: "chicken" | "cage" | "worker" | "eggEntry"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -920,80 +904,6 @@ export namespace Prisma {
           }
         }
       }
-      WorkerCage: {
-        payload: Prisma.$WorkerCagePayload<ExtArgs>
-        fields: Prisma.WorkerCageFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.WorkerCageFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.WorkerCageFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          findFirst: {
-            args: Prisma.WorkerCageFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.WorkerCageFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          findMany: {
-            args: Prisma.WorkerCageFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>[]
-          }
-          create: {
-            args: Prisma.WorkerCageCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          createMany: {
-            args: Prisma.WorkerCageCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.WorkerCageCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>[]
-          }
-          delete: {
-            args: Prisma.WorkerCageDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          update: {
-            args: Prisma.WorkerCageUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          deleteMany: {
-            args: Prisma.WorkerCageDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.WorkerCageUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.WorkerCageUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>[]
-          }
-          upsert: {
-            args: Prisma.WorkerCageUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WorkerCagePayload>
-          }
-          aggregate: {
-            args: Prisma.WorkerCageAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWorkerCage>
-          }
-          groupBy: {
-            args: Prisma.WorkerCageGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WorkerCageGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.WorkerCageCountArgs<ExtArgs>
-            result: $Utils.Optional<WorkerCageCountAggregateOutputType> | number
-          }
-        }
-      }
       EggEntry: {
         payload: Prisma.$EggEntryPayload<ExtArgs>
         fields: Prisma.EggEntryFieldRefs
@@ -1155,7 +1065,6 @@ export namespace Prisma {
     chicken?: ChickenOmit
     cage?: CageOmit
     worker?: WorkerOmit
-    workerCage?: WorkerCageOmit
     eggEntry?: EggEntryOmit
   }
 
@@ -1278,46 +1187,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type CageCountOutputType
-   */
-
-  export type CageCountOutputType = {
-    chicken: number
-    workers: number
-  }
-
-  export type CageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chicken?: boolean | CageCountOutputTypeCountChickenArgs
-    workers?: boolean | CageCountOutputTypeCountWorkersArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CageCountOutputType without action
-   */
-  export type CageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CageCountOutputType
-     */
-    select?: CageCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CageCountOutputType without action
-   */
-  export type CageCountOutputTypeCountChickenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChickenWhereInput
-  }
-
-  /**
-   * CageCountOutputType without action
-   */
-  export type CageCountOutputTypeCountWorkersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WorkerCageWhereInput
-  }
-
-
-  /**
    * Count Type WorkerCountOutputType
    */
 
@@ -1344,7 +1213,7 @@ export namespace Prisma {
    * WorkerCountOutputType without action
    */
   export type WorkerCountOutputTypeCountCagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WorkerCageWhereInput
+    where?: CageWhereInput
   }
 
 
@@ -1574,7 +1443,7 @@ export namespace Prisma {
     eggRate?: boolean
     breed?: boolean
     cageId?: boolean
-    cage?: boolean | CageDefaultArgs<ExtArgs>
+    cage?: boolean | Chicken$cageArgs<ExtArgs>
     eggEntries?: boolean | Chicken$eggEntriesArgs<ExtArgs>
     _count?: boolean | ChickenCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chicken"]>
@@ -1586,7 +1455,6 @@ export namespace Prisma {
     eggRate?: boolean
     breed?: boolean
     cageId?: boolean
-    cage?: boolean | CageDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chicken"]>
 
   export type ChickenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1596,7 +1464,6 @@ export namespace Prisma {
     eggRate?: boolean
     breed?: boolean
     cageId?: boolean
-    cage?: boolean | CageDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chicken"]>
 
   export type ChickenSelectScalar = {
@@ -1610,21 +1477,17 @@ export namespace Prisma {
 
   export type ChickenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "weight" | "age" | "eggRate" | "breed" | "cageId", ExtArgs["result"]["chicken"]>
   export type ChickenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cage?: boolean | CageDefaultArgs<ExtArgs>
+    cage?: boolean | Chicken$cageArgs<ExtArgs>
     eggEntries?: boolean | Chicken$eggEntriesArgs<ExtArgs>
     _count?: boolean | ChickenCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ChickenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }
-  export type ChickenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }
+  export type ChickenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ChickenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $ChickenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Chicken"
     objects: {
-      cage: Prisma.$CagePayload<ExtArgs>
+      cage: Prisma.$CagePayload<ExtArgs> | null
       eggEntries: Prisma.$EggEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2028,7 +1891,7 @@ export namespace Prisma {
    */
   export interface Prisma__ChickenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    cage<T extends CageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CageDefaultArgs<ExtArgs>>): Prisma__CageClient<$Result.GetResult<Prisma.$CagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cage<T extends Chicken$cageArgs<ExtArgs> = {}>(args?: Subset<T, Chicken$cageArgs<ExtArgs>>): Prisma__CageClient<$Result.GetResult<Prisma.$CagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     eggEntries<T extends Chicken$eggEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Chicken$eggEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EggEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2314,10 +2177,6 @@ export namespace Prisma {
      */
     data: ChickenCreateManyInput | ChickenCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChickenIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2388,10 +2247,6 @@ export namespace Prisma {
      * Limit how many Chickens to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChickenIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2461,6 +2316,25 @@ export namespace Prisma {
   }
 
   /**
+   * Chicken.cage
+   */
+  export type Chicken$cageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cage
+     */
+    select?: CageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cage
+     */
+    omit?: CageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CageInclude<ExtArgs> | null
+    where?: CageWhereInput
+  }
+
+  /**
    * Chicken.eggEntries
    */
   export type Chicken$eggEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2517,44 +2391,64 @@ export namespace Prisma {
 
   export type CageAvgAggregateOutputType = {
     id: number | null
+    chickenId: number | null
+    workerId: number | null
   }
 
   export type CageSumAggregateOutputType = {
     id: number | null
+    chickenId: number | null
+    workerId: number | null
   }
 
   export type CageMinAggregateOutputType = {
     id: number | null
+    chickenId: number | null
+    workerId: number | null
   }
 
   export type CageMaxAggregateOutputType = {
     id: number | null
+    chickenId: number | null
+    workerId: number | null
   }
 
   export type CageCountAggregateOutputType = {
     id: number
+    chickenId: number
+    workerId: number
     _all: number
   }
 
 
   export type CageAvgAggregateInputType = {
     id?: true
+    chickenId?: true
+    workerId?: true
   }
 
   export type CageSumAggregateInputType = {
     id?: true
+    chickenId?: true
+    workerId?: true
   }
 
   export type CageMinAggregateInputType = {
     id?: true
+    chickenId?: true
+    workerId?: true
   }
 
   export type CageMaxAggregateInputType = {
     id?: true
+    chickenId?: true
+    workerId?: true
   }
 
   export type CageCountAggregateInputType = {
     id?: true
+    chickenId?: true
+    workerId?: true
     _all?: true
   }
 
@@ -2646,6 +2540,8 @@ export namespace Prisma {
 
   export type CageGroupByOutputType = {
     id: number
+    chickenId: number | null
+    workerId: number | null
     _count: CageCountAggregateOutputType | null
     _avg: CageAvgAggregateOutputType | null
     _sum: CageSumAggregateOutputType | null
@@ -2669,40 +2565,58 @@ export namespace Prisma {
 
   export type CageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    chickenId?: boolean
+    workerId?: boolean
     chicken?: boolean | Cage$chickenArgs<ExtArgs>
-    workers?: boolean | Cage$workersArgs<ExtArgs>
-    _count?: boolean | CageCountOutputTypeDefaultArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
   }, ExtArgs["result"]["cage"]>
 
   export type CageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    chickenId?: boolean
+    workerId?: boolean
+    chicken?: boolean | Cage$chickenArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
   }, ExtArgs["result"]["cage"]>
 
   export type CageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    chickenId?: boolean
+    workerId?: boolean
+    chicken?: boolean | Cage$chickenArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
   }, ExtArgs["result"]["cage"]>
 
   export type CageSelectScalar = {
     id?: boolean
+    chickenId?: boolean
+    workerId?: boolean
   }
 
-  export type CageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id", ExtArgs["result"]["cage"]>
+  export type CageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chickenId" | "workerId", ExtArgs["result"]["cage"]>
   export type CageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chicken?: boolean | Cage$chickenArgs<ExtArgs>
-    workers?: boolean | Cage$workersArgs<ExtArgs>
-    _count?: boolean | CageCountOutputTypeDefaultArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
   }
-  export type CageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type CageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chicken?: boolean | Cage$chickenArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
+  }
+  export type CageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chicken?: boolean | Cage$chickenArgs<ExtArgs>
+    worker?: boolean | Cage$workerArgs<ExtArgs>
+  }
 
   export type $CagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Cage"
     objects: {
-      chicken: Prisma.$ChickenPayload<ExtArgs>[]
-      workers: Prisma.$WorkerCagePayload<ExtArgs>[]
+      chicken: Prisma.$ChickenPayload<ExtArgs> | null
+      worker: Prisma.$WorkerPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      chickenId: number | null
+      workerId: number | null
     }, ExtArgs["result"]["cage"]>
     composites: {}
   }
@@ -3097,8 +3011,8 @@ export namespace Prisma {
    */
   export interface Prisma__CageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    chicken<T extends Cage$chickenArgs<ExtArgs> = {}>(args?: Subset<T, Cage$chickenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChickenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    workers<T extends Cage$workersArgs<ExtArgs> = {}>(args?: Subset<T, Cage$workersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chicken<T extends Cage$chickenArgs<ExtArgs> = {}>(args?: Subset<T, Cage$chickenArgs<ExtArgs>>): Prisma__ChickenClient<$Result.GetResult<Prisma.$ChickenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    worker<T extends Cage$workerArgs<ExtArgs> = {}>(args?: Subset<T, Cage$workerArgs<ExtArgs>>): Prisma__WorkerClient<$Result.GetResult<Prisma.$WorkerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3129,6 +3043,8 @@ export namespace Prisma {
    */
   interface CageFieldRefs {
     readonly id: FieldRef<"Cage", 'Int'>
+    readonly chickenId: FieldRef<"Cage", 'Int'>
+    readonly workerId: FieldRef<"Cage", 'Int'>
   }
     
 
@@ -3378,6 +3294,10 @@ export namespace Prisma {
      */
     data: CageCreateManyInput | CageCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3448,6 +3368,10 @@ export namespace Prisma {
      * Limit how many Cages to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CageIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3533,35 +3457,25 @@ export namespace Prisma {
      */
     include?: ChickenInclude<ExtArgs> | null
     where?: ChickenWhereInput
-    orderBy?: ChickenOrderByWithRelationInput | ChickenOrderByWithRelationInput[]
-    cursor?: ChickenWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ChickenScalarFieldEnum | ChickenScalarFieldEnum[]
   }
 
   /**
-   * Cage.workers
+   * Cage.worker
    */
-  export type Cage$workersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Cage$workerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WorkerCage
+     * Select specific fields to fetch from the Worker
      */
-    select?: WorkerCageSelect<ExtArgs> | null
+    select?: WorkerSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WorkerCage
+     * Omit specific fields from the Worker
      */
-    omit?: WorkerCageOmit<ExtArgs> | null
+    omit?: WorkerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WorkerCageInclude<ExtArgs> | null
-    where?: WorkerCageWhereInput
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    cursor?: WorkerCageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WorkerCageScalarFieldEnum | WorkerCageScalarFieldEnum[]
+    include?: WorkerInclude<ExtArgs> | null
+    where?: WorkerWhereInput
   }
 
   /**
@@ -3802,7 +3716,7 @@ export namespace Prisma {
   export type $WorkerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Worker"
     objects: {
-      cages: Prisma.$WorkerCagePayload<ExtArgs>[]
+      cages: Prisma.$CagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4202,7 +4116,7 @@ export namespace Prisma {
    */
   export interface Prisma__WorkerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    cages<T extends Worker$cagesArgs<ExtArgs> = {}>(args?: Subset<T, Worker$cagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cages<T extends Worker$cagesArgs<ExtArgs> = {}>(args?: Subset<T, Worker$cagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4627,23 +4541,23 @@ export namespace Prisma {
    */
   export type Worker$cagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WorkerCage
+     * Select specific fields to fetch from the Cage
      */
-    select?: WorkerCageSelect<ExtArgs> | null
+    select?: CageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WorkerCage
+     * Omit specific fields from the Cage
      */
-    omit?: WorkerCageOmit<ExtArgs> | null
+    omit?: CageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WorkerCageInclude<ExtArgs> | null
-    where?: WorkerCageWhereInput
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    cursor?: WorkerCageWhereUniqueInput
+    include?: CageInclude<ExtArgs> | null
+    where?: CageWhereInput
+    orderBy?: CageOrderByWithRelationInput | CageOrderByWithRelationInput[]
+    cursor?: CageWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: WorkerCageScalarFieldEnum | WorkerCageScalarFieldEnum[]
+    distinct?: CageScalarFieldEnum | CageScalarFieldEnum[]
   }
 
   /**
@@ -4662,1071 +4576,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: WorkerInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model WorkerCage
-   */
-
-  export type AggregateWorkerCage = {
-    _count: WorkerCageCountAggregateOutputType | null
-    _avg: WorkerCageAvgAggregateOutputType | null
-    _sum: WorkerCageSumAggregateOutputType | null
-    _min: WorkerCageMinAggregateOutputType | null
-    _max: WorkerCageMaxAggregateOutputType | null
-  }
-
-  export type WorkerCageAvgAggregateOutputType = {
-    workerId: number | null
-    cageId: number | null
-  }
-
-  export type WorkerCageSumAggregateOutputType = {
-    workerId: number | null
-    cageId: number | null
-  }
-
-  export type WorkerCageMinAggregateOutputType = {
-    workerId: number | null
-    cageId: number | null
-  }
-
-  export type WorkerCageMaxAggregateOutputType = {
-    workerId: number | null
-    cageId: number | null
-  }
-
-  export type WorkerCageCountAggregateOutputType = {
-    workerId: number
-    cageId: number
-    _all: number
-  }
-
-
-  export type WorkerCageAvgAggregateInputType = {
-    workerId?: true
-    cageId?: true
-  }
-
-  export type WorkerCageSumAggregateInputType = {
-    workerId?: true
-    cageId?: true
-  }
-
-  export type WorkerCageMinAggregateInputType = {
-    workerId?: true
-    cageId?: true
-  }
-
-  export type WorkerCageMaxAggregateInputType = {
-    workerId?: true
-    cageId?: true
-  }
-
-  export type WorkerCageCountAggregateInputType = {
-    workerId?: true
-    cageId?: true
-    _all?: true
-  }
-
-  export type WorkerCageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WorkerCage to aggregate.
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WorkerCages to fetch.
-     */
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: WorkerCageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WorkerCages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WorkerCages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned WorkerCages
-    **/
-    _count?: true | WorkerCageCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: WorkerCageAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: WorkerCageSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: WorkerCageMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: WorkerCageMaxAggregateInputType
-  }
-
-  export type GetWorkerCageAggregateType<T extends WorkerCageAggregateArgs> = {
-        [P in keyof T & keyof AggregateWorkerCage]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateWorkerCage[P]>
-      : GetScalarType<T[P], AggregateWorkerCage[P]>
-  }
-
-
-
-
-  export type WorkerCageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WorkerCageWhereInput
-    orderBy?: WorkerCageOrderByWithAggregationInput | WorkerCageOrderByWithAggregationInput[]
-    by: WorkerCageScalarFieldEnum[] | WorkerCageScalarFieldEnum
-    having?: WorkerCageScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: WorkerCageCountAggregateInputType | true
-    _avg?: WorkerCageAvgAggregateInputType
-    _sum?: WorkerCageSumAggregateInputType
-    _min?: WorkerCageMinAggregateInputType
-    _max?: WorkerCageMaxAggregateInputType
-  }
-
-  export type WorkerCageGroupByOutputType = {
-    workerId: number
-    cageId: number
-    _count: WorkerCageCountAggregateOutputType | null
-    _avg: WorkerCageAvgAggregateOutputType | null
-    _sum: WorkerCageSumAggregateOutputType | null
-    _min: WorkerCageMinAggregateOutputType | null
-    _max: WorkerCageMaxAggregateOutputType | null
-  }
-
-  type GetWorkerCageGroupByPayload<T extends WorkerCageGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<WorkerCageGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof WorkerCageGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], WorkerCageGroupByOutputType[P]>
-            : GetScalarType<T[P], WorkerCageGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type WorkerCageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    workerId?: boolean
-    cageId?: boolean
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["workerCage"]>
-
-  export type WorkerCageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    workerId?: boolean
-    cageId?: boolean
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["workerCage"]>
-
-  export type WorkerCageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    workerId?: boolean
-    cageId?: boolean
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["workerCage"]>
-
-  export type WorkerCageSelectScalar = {
-    workerId?: boolean
-    cageId?: boolean
-  }
-
-  export type WorkerCageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"workerId" | "cageId", ExtArgs["result"]["workerCage"]>
-  export type WorkerCageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }
-  export type WorkerCageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }
-  export type WorkerCageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    worker?: boolean | WorkerDefaultArgs<ExtArgs>
-    cage?: boolean | CageDefaultArgs<ExtArgs>
-  }
-
-  export type $WorkerCagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "WorkerCage"
-    objects: {
-      worker: Prisma.$WorkerPayload<ExtArgs>
-      cage: Prisma.$CagePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      workerId: number
-      cageId: number
-    }, ExtArgs["result"]["workerCage"]>
-    composites: {}
-  }
-
-  type WorkerCageGetPayload<S extends boolean | null | undefined | WorkerCageDefaultArgs> = $Result.GetResult<Prisma.$WorkerCagePayload, S>
-
-  type WorkerCageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<WorkerCageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: WorkerCageCountAggregateInputType | true
-    }
-
-  export interface WorkerCageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WorkerCage'], meta: { name: 'WorkerCage' } }
-    /**
-     * Find zero or one WorkerCage that matches the filter.
-     * @param {WorkerCageFindUniqueArgs} args - Arguments to find a WorkerCage
-     * @example
-     * // Get one WorkerCage
-     * const workerCage = await prisma.workerCage.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends WorkerCageFindUniqueArgs>(args: SelectSubset<T, WorkerCageFindUniqueArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one WorkerCage that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {WorkerCageFindUniqueOrThrowArgs} args - Arguments to find a WorkerCage
-     * @example
-     * // Get one WorkerCage
-     * const workerCage = await prisma.workerCage.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends WorkerCageFindUniqueOrThrowArgs>(args: SelectSubset<T, WorkerCageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WorkerCage that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageFindFirstArgs} args - Arguments to find a WorkerCage
-     * @example
-     * // Get one WorkerCage
-     * const workerCage = await prisma.workerCage.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends WorkerCageFindFirstArgs>(args?: SelectSubset<T, WorkerCageFindFirstArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WorkerCage that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageFindFirstOrThrowArgs} args - Arguments to find a WorkerCage
-     * @example
-     * // Get one WorkerCage
-     * const workerCage = await prisma.workerCage.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends WorkerCageFindFirstOrThrowArgs>(args?: SelectSubset<T, WorkerCageFindFirstOrThrowArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more WorkerCages that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all WorkerCages
-     * const workerCages = await prisma.workerCage.findMany()
-     * 
-     * // Get first 10 WorkerCages
-     * const workerCages = await prisma.workerCage.findMany({ take: 10 })
-     * 
-     * // Only select the `workerId`
-     * const workerCageWithWorkerIdOnly = await prisma.workerCage.findMany({ select: { workerId: true } })
-     * 
-     */
-    findMany<T extends WorkerCageFindManyArgs>(args?: SelectSubset<T, WorkerCageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a WorkerCage.
-     * @param {WorkerCageCreateArgs} args - Arguments to create a WorkerCage.
-     * @example
-     * // Create one WorkerCage
-     * const WorkerCage = await prisma.workerCage.create({
-     *   data: {
-     *     // ... data to create a WorkerCage
-     *   }
-     * })
-     * 
-     */
-    create<T extends WorkerCageCreateArgs>(args: SelectSubset<T, WorkerCageCreateArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many WorkerCages.
-     * @param {WorkerCageCreateManyArgs} args - Arguments to create many WorkerCages.
-     * @example
-     * // Create many WorkerCages
-     * const workerCage = await prisma.workerCage.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends WorkerCageCreateManyArgs>(args?: SelectSubset<T, WorkerCageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many WorkerCages and returns the data saved in the database.
-     * @param {WorkerCageCreateManyAndReturnArgs} args - Arguments to create many WorkerCages.
-     * @example
-     * // Create many WorkerCages
-     * const workerCage = await prisma.workerCage.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many WorkerCages and only return the `workerId`
-     * const workerCageWithWorkerIdOnly = await prisma.workerCage.createManyAndReturn({
-     *   select: { workerId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends WorkerCageCreateManyAndReturnArgs>(args?: SelectSubset<T, WorkerCageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a WorkerCage.
-     * @param {WorkerCageDeleteArgs} args - Arguments to delete one WorkerCage.
-     * @example
-     * // Delete one WorkerCage
-     * const WorkerCage = await prisma.workerCage.delete({
-     *   where: {
-     *     // ... filter to delete one WorkerCage
-     *   }
-     * })
-     * 
-     */
-    delete<T extends WorkerCageDeleteArgs>(args: SelectSubset<T, WorkerCageDeleteArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one WorkerCage.
-     * @param {WorkerCageUpdateArgs} args - Arguments to update one WorkerCage.
-     * @example
-     * // Update one WorkerCage
-     * const workerCage = await prisma.workerCage.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends WorkerCageUpdateArgs>(args: SelectSubset<T, WorkerCageUpdateArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more WorkerCages.
-     * @param {WorkerCageDeleteManyArgs} args - Arguments to filter WorkerCages to delete.
-     * @example
-     * // Delete a few WorkerCages
-     * const { count } = await prisma.workerCage.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends WorkerCageDeleteManyArgs>(args?: SelectSubset<T, WorkerCageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WorkerCages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many WorkerCages
-     * const workerCage = await prisma.workerCage.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends WorkerCageUpdateManyArgs>(args: SelectSubset<T, WorkerCageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WorkerCages and returns the data updated in the database.
-     * @param {WorkerCageUpdateManyAndReturnArgs} args - Arguments to update many WorkerCages.
-     * @example
-     * // Update many WorkerCages
-     * const workerCage = await prisma.workerCage.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more WorkerCages and only return the `workerId`
-     * const workerCageWithWorkerIdOnly = await prisma.workerCage.updateManyAndReturn({
-     *   select: { workerId: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends WorkerCageUpdateManyAndReturnArgs>(args: SelectSubset<T, WorkerCageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one WorkerCage.
-     * @param {WorkerCageUpsertArgs} args - Arguments to update or create a WorkerCage.
-     * @example
-     * // Update or create a WorkerCage
-     * const workerCage = await prisma.workerCage.upsert({
-     *   create: {
-     *     // ... data to create a WorkerCage
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the WorkerCage we want to update
-     *   }
-     * })
-     */
-    upsert<T extends WorkerCageUpsertArgs>(args: SelectSubset<T, WorkerCageUpsertArgs<ExtArgs>>): Prisma__WorkerCageClient<$Result.GetResult<Prisma.$WorkerCagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of WorkerCages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageCountArgs} args - Arguments to filter WorkerCages to count.
-     * @example
-     * // Count the number of WorkerCages
-     * const count = await prisma.workerCage.count({
-     *   where: {
-     *     // ... the filter for the WorkerCages we want to count
-     *   }
-     * })
-    **/
-    count<T extends WorkerCageCountArgs>(
-      args?: Subset<T, WorkerCageCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], WorkerCageCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a WorkerCage.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends WorkerCageAggregateArgs>(args: Subset<T, WorkerCageAggregateArgs>): Prisma.PrismaPromise<GetWorkerCageAggregateType<T>>
-
-    /**
-     * Group by WorkerCage.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WorkerCageGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends WorkerCageGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: WorkerCageGroupByArgs['orderBy'] }
-        : { orderBy?: WorkerCageGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, WorkerCageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWorkerCageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the WorkerCage model
-   */
-  readonly fields: WorkerCageFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for WorkerCage.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__WorkerCageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    worker<T extends WorkerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkerDefaultArgs<ExtArgs>>): Prisma__WorkerClient<$Result.GetResult<Prisma.$WorkerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    cage<T extends CageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CageDefaultArgs<ExtArgs>>): Prisma__CageClient<$Result.GetResult<Prisma.$CagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the WorkerCage model
-   */
-  interface WorkerCageFieldRefs {
-    readonly workerId: FieldRef<"WorkerCage", 'Int'>
-    readonly cageId: FieldRef<"WorkerCage", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * WorkerCage findUnique
-   */
-  export type WorkerCageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter, which WorkerCage to fetch.
-     */
-    where: WorkerCageWhereUniqueInput
-  }
-
-  /**
-   * WorkerCage findUniqueOrThrow
-   */
-  export type WorkerCageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter, which WorkerCage to fetch.
-     */
-    where: WorkerCageWhereUniqueInput
-  }
-
-  /**
-   * WorkerCage findFirst
-   */
-  export type WorkerCageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter, which WorkerCage to fetch.
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WorkerCages to fetch.
-     */
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WorkerCages.
-     */
-    cursor?: WorkerCageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WorkerCages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WorkerCages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WorkerCages.
-     */
-    distinct?: WorkerCageScalarFieldEnum | WorkerCageScalarFieldEnum[]
-  }
-
-  /**
-   * WorkerCage findFirstOrThrow
-   */
-  export type WorkerCageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter, which WorkerCage to fetch.
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WorkerCages to fetch.
-     */
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WorkerCages.
-     */
-    cursor?: WorkerCageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WorkerCages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WorkerCages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WorkerCages.
-     */
-    distinct?: WorkerCageScalarFieldEnum | WorkerCageScalarFieldEnum[]
-  }
-
-  /**
-   * WorkerCage findMany
-   */
-  export type WorkerCageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter, which WorkerCages to fetch.
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WorkerCages to fetch.
-     */
-    orderBy?: WorkerCageOrderByWithRelationInput | WorkerCageOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing WorkerCages.
-     */
-    cursor?: WorkerCageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WorkerCages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WorkerCages.
-     */
-    skip?: number
-    distinct?: WorkerCageScalarFieldEnum | WorkerCageScalarFieldEnum[]
-  }
-
-  /**
-   * WorkerCage create
-   */
-  export type WorkerCageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * The data needed to create a WorkerCage.
-     */
-    data: XOR<WorkerCageCreateInput, WorkerCageUncheckedCreateInput>
-  }
-
-  /**
-   * WorkerCage createMany
-   */
-  export type WorkerCageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many WorkerCages.
-     */
-    data: WorkerCageCreateManyInput | WorkerCageCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * WorkerCage createManyAndReturn
-   */
-  export type WorkerCageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * The data used to create many WorkerCages.
-     */
-    data: WorkerCageCreateManyInput | WorkerCageCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * WorkerCage update
-   */
-  export type WorkerCageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * The data needed to update a WorkerCage.
-     */
-    data: XOR<WorkerCageUpdateInput, WorkerCageUncheckedUpdateInput>
-    /**
-     * Choose, which WorkerCage to update.
-     */
-    where: WorkerCageWhereUniqueInput
-  }
-
-  /**
-   * WorkerCage updateMany
-   */
-  export type WorkerCageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update WorkerCages.
-     */
-    data: XOR<WorkerCageUpdateManyMutationInput, WorkerCageUncheckedUpdateManyInput>
-    /**
-     * Filter which WorkerCages to update
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * Limit how many WorkerCages to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * WorkerCage updateManyAndReturn
-   */
-  export type WorkerCageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * The data used to update WorkerCages.
-     */
-    data: XOR<WorkerCageUpdateManyMutationInput, WorkerCageUncheckedUpdateManyInput>
-    /**
-     * Filter which WorkerCages to update
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * Limit how many WorkerCages to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * WorkerCage upsert
-   */
-  export type WorkerCageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * The filter to search for the WorkerCage to update in case it exists.
-     */
-    where: WorkerCageWhereUniqueInput
-    /**
-     * In case the WorkerCage found by the `where` argument doesn't exist, create a new WorkerCage with this data.
-     */
-    create: XOR<WorkerCageCreateInput, WorkerCageUncheckedCreateInput>
-    /**
-     * In case the WorkerCage was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<WorkerCageUpdateInput, WorkerCageUncheckedUpdateInput>
-  }
-
-  /**
-   * WorkerCage delete
-   */
-  export type WorkerCageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
-    /**
-     * Filter which WorkerCage to delete.
-     */
-    where: WorkerCageWhereUniqueInput
-  }
-
-  /**
-   * WorkerCage deleteMany
-   */
-  export type WorkerCageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WorkerCages to delete
-     */
-    where?: WorkerCageWhereInput
-    /**
-     * Limit how many WorkerCages to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * WorkerCage without action
-   */
-  export type WorkerCageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WorkerCage
-     */
-    select?: WorkerCageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WorkerCage
-     */
-    omit?: WorkerCageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WorkerCageInclude<ExtArgs> | null
   }
 
 
@@ -6857,7 +5706,9 @@ export namespace Prisma {
 
 
   export const CageScalarFieldEnum: {
-    id: 'id'
+    id: 'id',
+    chickenId: 'chickenId',
+    workerId: 'workerId'
   };
 
   export type CageScalarFieldEnum = (typeof CageScalarFieldEnum)[keyof typeof CageScalarFieldEnum]
@@ -6870,14 +5721,6 @@ export namespace Prisma {
   };
 
   export type WorkerScalarFieldEnum = (typeof WorkerScalarFieldEnum)[keyof typeof WorkerScalarFieldEnum]
-
-
-  export const WorkerCageScalarFieldEnum: {
-    workerId: 'workerId',
-    cageId: 'cageId'
-  };
-
-  export type WorkerCageScalarFieldEnum = (typeof WorkerCageScalarFieldEnum)[keyof typeof WorkerCageScalarFieldEnum]
 
 
   export const EggEntryScalarFieldEnum: {
@@ -6905,6 +5748,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -6995,7 +5846,7 @@ export namespace Prisma {
     eggRate?: FloatFilter<"Chicken"> | number
     breed?: StringFilter<"Chicken"> | string
     cageId?: IntFilter<"Chicken"> | number
-    cage?: XOR<CageScalarRelationFilter, CageWhereInput>
+    cage?: XOR<CageNullableScalarRelationFilter, CageWhereInput> | null
     eggEntries?: EggEntryListRelationFilter
   }
 
@@ -7020,7 +5871,7 @@ export namespace Prisma {
     eggRate?: FloatFilter<"Chicken"> | number
     breed?: StringFilter<"Chicken"> | string
     cageId?: IntFilter<"Chicken"> | number
-    cage?: XOR<CageScalarRelationFilter, CageWhereInput>
+    cage?: XOR<CageNullableScalarRelationFilter, CageWhereInput> | null
     eggEntries?: EggEntryListRelationFilter
   }, "id">
 
@@ -7055,27 +5906,35 @@ export namespace Prisma {
     OR?: CageWhereInput[]
     NOT?: CageWhereInput | CageWhereInput[]
     id?: IntFilter<"Cage"> | number
-    chicken?: ChickenListRelationFilter
-    workers?: WorkerCageListRelationFilter
+    chickenId?: IntNullableFilter<"Cage"> | number | null
+    workerId?: IntNullableFilter<"Cage"> | number | null
+    chicken?: XOR<ChickenNullableScalarRelationFilter, ChickenWhereInput> | null
+    worker?: XOR<WorkerNullableScalarRelationFilter, WorkerWhereInput> | null
   }
 
   export type CageOrderByWithRelationInput = {
     id?: SortOrder
-    chicken?: ChickenOrderByRelationAggregateInput
-    workers?: WorkerCageOrderByRelationAggregateInput
+    chickenId?: SortOrderInput | SortOrder
+    workerId?: SortOrderInput | SortOrder
+    chicken?: ChickenOrderByWithRelationInput
+    worker?: WorkerOrderByWithRelationInput
   }
 
   export type CageWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    chickenId?: number
     AND?: CageWhereInput | CageWhereInput[]
     OR?: CageWhereInput[]
     NOT?: CageWhereInput | CageWhereInput[]
-    chicken?: ChickenListRelationFilter
-    workers?: WorkerCageListRelationFilter
-  }, "id">
+    workerId?: IntNullableFilter<"Cage"> | number | null
+    chicken?: XOR<ChickenNullableScalarRelationFilter, ChickenWhereInput> | null
+    worker?: XOR<WorkerNullableScalarRelationFilter, WorkerWhereInput> | null
+  }, "id" | "chickenId">
 
   export type CageOrderByWithAggregationInput = {
     id?: SortOrder
+    chickenId?: SortOrderInput | SortOrder
+    workerId?: SortOrderInput | SortOrder
     _count?: CageCountOrderByAggregateInput
     _avg?: CageAvgOrderByAggregateInput
     _max?: CageMaxOrderByAggregateInput
@@ -7088,6 +5947,8 @@ export namespace Prisma {
     OR?: CageScalarWhereWithAggregatesInput[]
     NOT?: CageScalarWhereWithAggregatesInput | CageScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Cage"> | number
+    chickenId?: IntNullableWithAggregatesFilter<"Cage"> | number | null
+    workerId?: IntNullableWithAggregatesFilter<"Cage"> | number | null
   }
 
   export type WorkerWhereInput = {
@@ -7097,14 +5958,14 @@ export namespace Prisma {
     id?: IntFilter<"Worker"> | number
     name?: StringFilter<"Worker"> | string
     salary?: FloatFilter<"Worker"> | number
-    cages?: WorkerCageListRelationFilter
+    cages?: CageListRelationFilter
   }
 
   export type WorkerOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     salary?: SortOrder
-    cages?: WorkerCageOrderByRelationAggregateInput
+    cages?: CageOrderByRelationAggregateInput
   }
 
   export type WorkerWhereUniqueInput = Prisma.AtLeast<{
@@ -7114,7 +5975,7 @@ export namespace Prisma {
     NOT?: WorkerWhereInput | WorkerWhereInput[]
     name?: StringFilter<"Worker"> | string
     salary?: FloatFilter<"Worker"> | number
-    cages?: WorkerCageListRelationFilter
+    cages?: CageListRelationFilter
   }, "id">
 
   export type WorkerOrderByWithAggregationInput = {
@@ -7135,52 +5996,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Worker"> | number
     name?: StringWithAggregatesFilter<"Worker"> | string
     salary?: FloatWithAggregatesFilter<"Worker"> | number
-  }
-
-  export type WorkerCageWhereInput = {
-    AND?: WorkerCageWhereInput | WorkerCageWhereInput[]
-    OR?: WorkerCageWhereInput[]
-    NOT?: WorkerCageWhereInput | WorkerCageWhereInput[]
-    workerId?: IntFilter<"WorkerCage"> | number
-    cageId?: IntFilter<"WorkerCage"> | number
-    worker?: XOR<WorkerScalarRelationFilter, WorkerWhereInput>
-    cage?: XOR<CageScalarRelationFilter, CageWhereInput>
-  }
-
-  export type WorkerCageOrderByWithRelationInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-    worker?: WorkerOrderByWithRelationInput
-    cage?: CageOrderByWithRelationInput
-  }
-
-  export type WorkerCageWhereUniqueInput = Prisma.AtLeast<{
-    workerId_cageId?: WorkerCageWorkerIdCageIdCompoundUniqueInput
-    AND?: WorkerCageWhereInput | WorkerCageWhereInput[]
-    OR?: WorkerCageWhereInput[]
-    NOT?: WorkerCageWhereInput | WorkerCageWhereInput[]
-    workerId?: IntFilter<"WorkerCage"> | number
-    cageId?: IntFilter<"WorkerCage"> | number
-    worker?: XOR<WorkerScalarRelationFilter, WorkerWhereInput>
-    cage?: XOR<CageScalarRelationFilter, CageWhereInput>
-  }, "workerId_cageId">
-
-  export type WorkerCageOrderByWithAggregationInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-    _count?: WorkerCageCountOrderByAggregateInput
-    _avg?: WorkerCageAvgOrderByAggregateInput
-    _max?: WorkerCageMaxOrderByAggregateInput
-    _min?: WorkerCageMinOrderByAggregateInput
-    _sum?: WorkerCageSumOrderByAggregateInput
-  }
-
-  export type WorkerCageScalarWhereWithAggregatesInput = {
-    AND?: WorkerCageScalarWhereWithAggregatesInput | WorkerCageScalarWhereWithAggregatesInput[]
-    OR?: WorkerCageScalarWhereWithAggregatesInput[]
-    NOT?: WorkerCageScalarWhereWithAggregatesInput | WorkerCageScalarWhereWithAggregatesInput[]
-    workerId?: IntWithAggregatesFilter<"WorkerCage"> | number
-    cageId?: IntWithAggregatesFilter<"WorkerCage"> | number
   }
 
   export type EggEntryWhereInput = {
@@ -7245,7 +6060,8 @@ export namespace Prisma {
     age: number
     eggRate: number
     breed: string
-    cage: CageCreateNestedOneWithoutChickenInput
+    cageId: number
+    cage?: CageCreateNestedOneWithoutChickenInput
     eggEntries?: EggEntryCreateNestedManyWithoutChickenInput
   }
 
@@ -7256,6 +6072,7 @@ export namespace Prisma {
     eggRate: number
     breed: string
     cageId: number
+    cage?: CageUncheckedCreateNestedOneWithoutChickenInput
     eggEntries?: EggEntryUncheckedCreateNestedManyWithoutChickenInput
   }
 
@@ -7264,7 +6081,8 @@ export namespace Prisma {
     age?: IntFieldUpdateOperationsInput | number
     eggRate?: FloatFieldUpdateOperationsInput | number
     breed?: StringFieldUpdateOperationsInput | string
-    cage?: CageUpdateOneRequiredWithoutChickenNestedInput
+    cageId?: IntFieldUpdateOperationsInput | number
+    cage?: CageUpdateOneWithoutChickenNestedInput
     eggEntries?: EggEntryUpdateManyWithoutChickenNestedInput
   }
 
@@ -7275,6 +6093,7 @@ export namespace Prisma {
     eggRate?: FloatFieldUpdateOperationsInput | number
     breed?: StringFieldUpdateOperationsInput | string
     cageId?: IntFieldUpdateOperationsInput | number
+    cage?: CageUncheckedUpdateOneWithoutChickenNestedInput
     eggEntries?: EggEntryUncheckedUpdateManyWithoutChickenNestedInput
   }
 
@@ -7292,6 +6111,7 @@ export namespace Prisma {
     age?: IntFieldUpdateOperationsInput | number
     eggRate?: FloatFieldUpdateOperationsInput | number
     breed?: StringFieldUpdateOperationsInput | string
+    cageId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ChickenUncheckedUpdateManyInput = {
@@ -7304,29 +6124,31 @@ export namespace Prisma {
   }
 
   export type CageCreateInput = {
-    chicken?: ChickenCreateNestedManyWithoutCageInput
-    workers?: WorkerCageCreateNestedManyWithoutCageInput
+    chicken?: ChickenCreateNestedOneWithoutCageInput
+    worker?: WorkerCreateNestedOneWithoutCagesInput
   }
 
   export type CageUncheckedCreateInput = {
     id?: number
-    chicken?: ChickenUncheckedCreateNestedManyWithoutCageInput
-    workers?: WorkerCageUncheckedCreateNestedManyWithoutCageInput
+    chickenId?: number | null
+    workerId?: number | null
   }
 
   export type CageUpdateInput = {
-    chicken?: ChickenUpdateManyWithoutCageNestedInput
-    workers?: WorkerCageUpdateManyWithoutCageNestedInput
+    chicken?: ChickenUpdateOneWithoutCageNestedInput
+    worker?: WorkerUpdateOneWithoutCagesNestedInput
   }
 
   export type CageUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    chicken?: ChickenUncheckedUpdateManyWithoutCageNestedInput
-    workers?: WorkerCageUncheckedUpdateManyWithoutCageNestedInput
+    chickenId?: NullableIntFieldUpdateOperationsInput | number | null
+    workerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CageCreateManyInput = {
     id?: number
+    chickenId?: number | null
+    workerId?: number | null
   }
 
   export type CageUpdateManyMutationInput = {
@@ -7335,32 +6157,34 @@ export namespace Prisma {
 
   export type CageUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    chickenId?: NullableIntFieldUpdateOperationsInput | number | null
+    workerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type WorkerCreateInput = {
     name: string
     salary: number
-    cages?: WorkerCageCreateNestedManyWithoutWorkerInput
+    cages?: CageCreateNestedManyWithoutWorkerInput
   }
 
   export type WorkerUncheckedCreateInput = {
     id?: number
     name: string
     salary: number
-    cages?: WorkerCageUncheckedCreateNestedManyWithoutWorkerInput
+    cages?: CageUncheckedCreateNestedManyWithoutWorkerInput
   }
 
   export type WorkerUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     salary?: FloatFieldUpdateOperationsInput | number
-    cages?: WorkerCageUpdateManyWithoutWorkerNestedInput
+    cages?: CageUpdateManyWithoutWorkerNestedInput
   }
 
   export type WorkerUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     salary?: FloatFieldUpdateOperationsInput | number
-    cages?: WorkerCageUncheckedUpdateManyWithoutWorkerNestedInput
+    cages?: CageUncheckedUpdateManyWithoutWorkerNestedInput
   }
 
   export type WorkerCreateManyInput = {
@@ -7378,40 +6202,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     salary?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type WorkerCageCreateInput = {
-    worker: WorkerCreateNestedOneWithoutCagesInput
-    cage: CageCreateNestedOneWithoutWorkersInput
-  }
-
-  export type WorkerCageUncheckedCreateInput = {
-    workerId: number
-    cageId: number
-  }
-
-  export type WorkerCageUpdateInput = {
-    worker?: WorkerUpdateOneRequiredWithoutCagesNestedInput
-    cage?: CageUpdateOneRequiredWithoutWorkersNestedInput
-  }
-
-  export type WorkerCageUncheckedUpdateInput = {
-    workerId?: IntFieldUpdateOperationsInput | number
-    cageId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type WorkerCageCreateManyInput = {
-    workerId: number
-    cageId: number
-  }
-
-  export type WorkerCageUpdateManyMutationInput = {
-
-  }
-
-  export type WorkerCageUncheckedUpdateManyInput = {
-    workerId?: IntFieldUpdateOperationsInput | number
-    cageId?: IntFieldUpdateOperationsInput | number
   }
 
   export type EggEntryCreateInput = {
@@ -7503,9 +6293,9 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type CageScalarRelationFilter = {
-    is?: CageWhereInput
-    isNot?: CageWhereInput
+  export type CageNullableScalarRelationFilter = {
+    is?: CageWhereInput | null
+    isNot?: CageWhereInput | null
   }
 
   export type EggEntryListRelationFilter = {
@@ -7611,44 +6401,86 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type ChickenListRelationFilter = {
-    every?: ChickenWhereInput
-    some?: ChickenWhereInput
-    none?: ChickenWhereInput
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type WorkerCageListRelationFilter = {
-    every?: WorkerCageWhereInput
-    some?: WorkerCageWhereInput
-    none?: WorkerCageWhereInput
+  export type ChickenNullableScalarRelationFilter = {
+    is?: ChickenWhereInput | null
+    isNot?: ChickenWhereInput | null
   }
 
-  export type ChickenOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type WorkerNullableScalarRelationFilter = {
+    is?: WorkerWhereInput | null
+    isNot?: WorkerWhereInput | null
   }
 
-  export type WorkerCageOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type CageCountOrderByAggregateInput = {
     id?: SortOrder
+    chickenId?: SortOrder
+    workerId?: SortOrder
   }
 
   export type CageAvgOrderByAggregateInput = {
     id?: SortOrder
+    chickenId?: SortOrder
+    workerId?: SortOrder
   }
 
   export type CageMaxOrderByAggregateInput = {
     id?: SortOrder
+    chickenId?: SortOrder
+    workerId?: SortOrder
   }
 
   export type CageMinOrderByAggregateInput = {
     id?: SortOrder
+    chickenId?: SortOrder
+    workerId?: SortOrder
   }
 
   export type CageSumOrderByAggregateInput = {
     id?: SortOrder
+    chickenId?: SortOrder
+    workerId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type CageListRelationFilter = {
+    every?: CageWhereInput
+    some?: CageWhereInput
+    none?: CageWhereInput
+  }
+
+  export type CageOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type WorkerCountOrderByAggregateInput = {
@@ -7677,41 +6509,6 @@ export namespace Prisma {
   export type WorkerSumOrderByAggregateInput = {
     id?: SortOrder
     salary?: SortOrder
-  }
-
-  export type WorkerScalarRelationFilter = {
-    is?: WorkerWhereInput
-    isNot?: WorkerWhereInput
-  }
-
-  export type WorkerCageWorkerIdCageIdCompoundUniqueInput = {
-    workerId: number
-    cageId: number
-  }
-
-  export type WorkerCageCountOrderByAggregateInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-  }
-
-  export type WorkerCageAvgOrderByAggregateInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-  }
-
-  export type WorkerCageMaxOrderByAggregateInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-  }
-
-  export type WorkerCageMinOrderByAggregateInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
-  }
-
-  export type WorkerCageSumOrderByAggregateInput = {
-    workerId?: SortOrder
-    cageId?: SortOrder
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -7810,6 +6607,12 @@ export namespace Prisma {
     connect?: EggEntryWhereUniqueInput | EggEntryWhereUniqueInput[]
   }
 
+  export type CageUncheckedCreateNestedOneWithoutChickenInput = {
+    create?: XOR<CageCreateWithoutChickenInput, CageUncheckedCreateWithoutChickenInput>
+    connectOrCreate?: CageCreateOrConnectWithoutChickenInput
+    connect?: CageWhereUniqueInput
+  }
+
   export type EggEntryUncheckedCreateNestedManyWithoutChickenInput = {
     create?: XOR<EggEntryCreateWithoutChickenInput, EggEntryUncheckedCreateWithoutChickenInput> | EggEntryCreateWithoutChickenInput[] | EggEntryUncheckedCreateWithoutChickenInput[]
     connectOrCreate?: EggEntryCreateOrConnectWithoutChickenInput | EggEntryCreateOrConnectWithoutChickenInput[]
@@ -7837,10 +6640,12 @@ export namespace Prisma {
     set?: string
   }
 
-  export type CageUpdateOneRequiredWithoutChickenNestedInput = {
+  export type CageUpdateOneWithoutChickenNestedInput = {
     create?: XOR<CageCreateWithoutChickenInput, CageUncheckedCreateWithoutChickenInput>
     connectOrCreate?: CageCreateOrConnectWithoutChickenInput
     upsert?: CageUpsertWithoutChickenInput
+    disconnect?: CageWhereInput | boolean
+    delete?: CageWhereInput | boolean
     connect?: CageWhereUniqueInput
     update?: XOR<XOR<CageUpdateToOneWithWhereWithoutChickenInput, CageUpdateWithoutChickenInput>, CageUncheckedUpdateWithoutChickenInput>
   }
@@ -7859,6 +6664,16 @@ export namespace Prisma {
     deleteMany?: EggEntryScalarWhereInput | EggEntryScalarWhereInput[]
   }
 
+  export type CageUncheckedUpdateOneWithoutChickenNestedInput = {
+    create?: XOR<CageCreateWithoutChickenInput, CageUncheckedCreateWithoutChickenInput>
+    connectOrCreate?: CageCreateOrConnectWithoutChickenInput
+    upsert?: CageUpsertWithoutChickenInput
+    disconnect?: CageWhereInput | boolean
+    delete?: CageWhereInput | boolean
+    connect?: CageWhereUniqueInput
+    update?: XOR<XOR<CageUpdateToOneWithWhereWithoutChickenInput, CageUpdateWithoutChickenInput>, CageUncheckedUpdateWithoutChickenInput>
+  }
+
   export type EggEntryUncheckedUpdateManyWithoutChickenNestedInput = {
     create?: XOR<EggEntryCreateWithoutChickenInput, EggEntryUncheckedCreateWithoutChickenInput> | EggEntryCreateWithoutChickenInput[] | EggEntryUncheckedCreateWithoutChickenInput[]
     connectOrCreate?: EggEntryCreateOrConnectWithoutChickenInput | EggEntryCreateOrConnectWithoutChickenInput[]
@@ -7873,130 +6688,10 @@ export namespace Prisma {
     deleteMany?: EggEntryScalarWhereInput | EggEntryScalarWhereInput[]
   }
 
-  export type ChickenCreateNestedManyWithoutCageInput = {
-    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput> | ChickenCreateWithoutCageInput[] | ChickenUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput | ChickenCreateOrConnectWithoutCageInput[]
-    createMany?: ChickenCreateManyCageInputEnvelope
-    connect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-  }
-
-  export type WorkerCageCreateNestedManyWithoutCageInput = {
-    create?: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput> | WorkerCageCreateWithoutCageInput[] | WorkerCageUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutCageInput | WorkerCageCreateOrConnectWithoutCageInput[]
-    createMany?: WorkerCageCreateManyCageInputEnvelope
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-  }
-
-  export type ChickenUncheckedCreateNestedManyWithoutCageInput = {
-    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput> | ChickenCreateWithoutCageInput[] | ChickenUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput | ChickenCreateOrConnectWithoutCageInput[]
-    createMany?: ChickenCreateManyCageInputEnvelope
-    connect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-  }
-
-  export type WorkerCageUncheckedCreateNestedManyWithoutCageInput = {
-    create?: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput> | WorkerCageCreateWithoutCageInput[] | WorkerCageUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutCageInput | WorkerCageCreateOrConnectWithoutCageInput[]
-    createMany?: WorkerCageCreateManyCageInputEnvelope
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-  }
-
-  export type ChickenUpdateManyWithoutCageNestedInput = {
-    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput> | ChickenCreateWithoutCageInput[] | ChickenUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput | ChickenCreateOrConnectWithoutCageInput[]
-    upsert?: ChickenUpsertWithWhereUniqueWithoutCageInput | ChickenUpsertWithWhereUniqueWithoutCageInput[]
-    createMany?: ChickenCreateManyCageInputEnvelope
-    set?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    disconnect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    delete?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    connect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    update?: ChickenUpdateWithWhereUniqueWithoutCageInput | ChickenUpdateWithWhereUniqueWithoutCageInput[]
-    updateMany?: ChickenUpdateManyWithWhereWithoutCageInput | ChickenUpdateManyWithWhereWithoutCageInput[]
-    deleteMany?: ChickenScalarWhereInput | ChickenScalarWhereInput[]
-  }
-
-  export type WorkerCageUpdateManyWithoutCageNestedInput = {
-    create?: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput> | WorkerCageCreateWithoutCageInput[] | WorkerCageUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutCageInput | WorkerCageCreateOrConnectWithoutCageInput[]
-    upsert?: WorkerCageUpsertWithWhereUniqueWithoutCageInput | WorkerCageUpsertWithWhereUniqueWithoutCageInput[]
-    createMany?: WorkerCageCreateManyCageInputEnvelope
-    set?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    disconnect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    delete?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    update?: WorkerCageUpdateWithWhereUniqueWithoutCageInput | WorkerCageUpdateWithWhereUniqueWithoutCageInput[]
-    updateMany?: WorkerCageUpdateManyWithWhereWithoutCageInput | WorkerCageUpdateManyWithWhereWithoutCageInput[]
-    deleteMany?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
-  }
-
-  export type ChickenUncheckedUpdateManyWithoutCageNestedInput = {
-    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput> | ChickenCreateWithoutCageInput[] | ChickenUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput | ChickenCreateOrConnectWithoutCageInput[]
-    upsert?: ChickenUpsertWithWhereUniqueWithoutCageInput | ChickenUpsertWithWhereUniqueWithoutCageInput[]
-    createMany?: ChickenCreateManyCageInputEnvelope
-    set?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    disconnect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    delete?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    connect?: ChickenWhereUniqueInput | ChickenWhereUniqueInput[]
-    update?: ChickenUpdateWithWhereUniqueWithoutCageInput | ChickenUpdateWithWhereUniqueWithoutCageInput[]
-    updateMany?: ChickenUpdateManyWithWhereWithoutCageInput | ChickenUpdateManyWithWhereWithoutCageInput[]
-    deleteMany?: ChickenScalarWhereInput | ChickenScalarWhereInput[]
-  }
-
-  export type WorkerCageUncheckedUpdateManyWithoutCageNestedInput = {
-    create?: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput> | WorkerCageCreateWithoutCageInput[] | WorkerCageUncheckedCreateWithoutCageInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutCageInput | WorkerCageCreateOrConnectWithoutCageInput[]
-    upsert?: WorkerCageUpsertWithWhereUniqueWithoutCageInput | WorkerCageUpsertWithWhereUniqueWithoutCageInput[]
-    createMany?: WorkerCageCreateManyCageInputEnvelope
-    set?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    disconnect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    delete?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    update?: WorkerCageUpdateWithWhereUniqueWithoutCageInput | WorkerCageUpdateWithWhereUniqueWithoutCageInput[]
-    updateMany?: WorkerCageUpdateManyWithWhereWithoutCageInput | WorkerCageUpdateManyWithWhereWithoutCageInput[]
-    deleteMany?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
-  }
-
-  export type WorkerCageCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput> | WorkerCageCreateWithoutWorkerInput[] | WorkerCageUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutWorkerInput | WorkerCageCreateOrConnectWithoutWorkerInput[]
-    createMany?: WorkerCageCreateManyWorkerInputEnvelope
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-  }
-
-  export type WorkerCageUncheckedCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput> | WorkerCageCreateWithoutWorkerInput[] | WorkerCageUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutWorkerInput | WorkerCageCreateOrConnectWithoutWorkerInput[]
-    createMany?: WorkerCageCreateManyWorkerInputEnvelope
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-  }
-
-  export type WorkerCageUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput> | WorkerCageCreateWithoutWorkerInput[] | WorkerCageUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutWorkerInput | WorkerCageCreateOrConnectWithoutWorkerInput[]
-    upsert?: WorkerCageUpsertWithWhereUniqueWithoutWorkerInput | WorkerCageUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: WorkerCageCreateManyWorkerInputEnvelope
-    set?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    disconnect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    delete?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    update?: WorkerCageUpdateWithWhereUniqueWithoutWorkerInput | WorkerCageUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: WorkerCageUpdateManyWithWhereWithoutWorkerInput | WorkerCageUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
-  }
-
-  export type WorkerCageUncheckedUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput> | WorkerCageCreateWithoutWorkerInput[] | WorkerCageUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: WorkerCageCreateOrConnectWithoutWorkerInput | WorkerCageCreateOrConnectWithoutWorkerInput[]
-    upsert?: WorkerCageUpsertWithWhereUniqueWithoutWorkerInput | WorkerCageUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: WorkerCageCreateManyWorkerInputEnvelope
-    set?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    disconnect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    delete?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    connect?: WorkerCageWhereUniqueInput | WorkerCageWhereUniqueInput[]
-    update?: WorkerCageUpdateWithWhereUniqueWithoutWorkerInput | WorkerCageUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: WorkerCageUpdateManyWithWhereWithoutWorkerInput | WorkerCageUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
+  export type ChickenCreateNestedOneWithoutCageInput = {
+    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput>
+    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput
+    connect?: ChickenWhereUniqueInput
   }
 
   export type WorkerCreateNestedOneWithoutCagesInput = {
@@ -8005,26 +6700,74 @@ export namespace Prisma {
     connect?: WorkerWhereUniqueInput
   }
 
-  export type CageCreateNestedOneWithoutWorkersInput = {
-    create?: XOR<CageCreateWithoutWorkersInput, CageUncheckedCreateWithoutWorkersInput>
-    connectOrCreate?: CageCreateOrConnectWithoutWorkersInput
-    connect?: CageWhereUniqueInput
+  export type ChickenUpdateOneWithoutCageNestedInput = {
+    create?: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput>
+    connectOrCreate?: ChickenCreateOrConnectWithoutCageInput
+    upsert?: ChickenUpsertWithoutCageInput
+    disconnect?: ChickenWhereInput | boolean
+    delete?: ChickenWhereInput | boolean
+    connect?: ChickenWhereUniqueInput
+    update?: XOR<XOR<ChickenUpdateToOneWithWhereWithoutCageInput, ChickenUpdateWithoutCageInput>, ChickenUncheckedUpdateWithoutCageInput>
   }
 
-  export type WorkerUpdateOneRequiredWithoutCagesNestedInput = {
+  export type WorkerUpdateOneWithoutCagesNestedInput = {
     create?: XOR<WorkerCreateWithoutCagesInput, WorkerUncheckedCreateWithoutCagesInput>
     connectOrCreate?: WorkerCreateOrConnectWithoutCagesInput
     upsert?: WorkerUpsertWithoutCagesInput
+    disconnect?: WorkerWhereInput | boolean
+    delete?: WorkerWhereInput | boolean
     connect?: WorkerWhereUniqueInput
     update?: XOR<XOR<WorkerUpdateToOneWithWhereWithoutCagesInput, WorkerUpdateWithoutCagesInput>, WorkerUncheckedUpdateWithoutCagesInput>
   }
 
-  export type CageUpdateOneRequiredWithoutWorkersNestedInput = {
-    create?: XOR<CageCreateWithoutWorkersInput, CageUncheckedCreateWithoutWorkersInput>
-    connectOrCreate?: CageCreateOrConnectWithoutWorkersInput
-    upsert?: CageUpsertWithoutWorkersInput
-    connect?: CageWhereUniqueInput
-    update?: XOR<XOR<CageUpdateToOneWithWhereWithoutWorkersInput, CageUpdateWithoutWorkersInput>, CageUncheckedUpdateWithoutWorkersInput>
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type CageCreateNestedManyWithoutWorkerInput = {
+    create?: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput> | CageCreateWithoutWorkerInput[] | CageUncheckedCreateWithoutWorkerInput[]
+    connectOrCreate?: CageCreateOrConnectWithoutWorkerInput | CageCreateOrConnectWithoutWorkerInput[]
+    createMany?: CageCreateManyWorkerInputEnvelope
+    connect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+  }
+
+  export type CageUncheckedCreateNestedManyWithoutWorkerInput = {
+    create?: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput> | CageCreateWithoutWorkerInput[] | CageUncheckedCreateWithoutWorkerInput[]
+    connectOrCreate?: CageCreateOrConnectWithoutWorkerInput | CageCreateOrConnectWithoutWorkerInput[]
+    createMany?: CageCreateManyWorkerInputEnvelope
+    connect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+  }
+
+  export type CageUpdateManyWithoutWorkerNestedInput = {
+    create?: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput> | CageCreateWithoutWorkerInput[] | CageUncheckedCreateWithoutWorkerInput[]
+    connectOrCreate?: CageCreateOrConnectWithoutWorkerInput | CageCreateOrConnectWithoutWorkerInput[]
+    upsert?: CageUpsertWithWhereUniqueWithoutWorkerInput | CageUpsertWithWhereUniqueWithoutWorkerInput[]
+    createMany?: CageCreateManyWorkerInputEnvelope
+    set?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    disconnect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    delete?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    connect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    update?: CageUpdateWithWhereUniqueWithoutWorkerInput | CageUpdateWithWhereUniqueWithoutWorkerInput[]
+    updateMany?: CageUpdateManyWithWhereWithoutWorkerInput | CageUpdateManyWithWhereWithoutWorkerInput[]
+    deleteMany?: CageScalarWhereInput | CageScalarWhereInput[]
+  }
+
+  export type CageUncheckedUpdateManyWithoutWorkerNestedInput = {
+    create?: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput> | CageCreateWithoutWorkerInput[] | CageUncheckedCreateWithoutWorkerInput[]
+    connectOrCreate?: CageCreateOrConnectWithoutWorkerInput | CageCreateOrConnectWithoutWorkerInput[]
+    upsert?: CageUpsertWithWhereUniqueWithoutWorkerInput | CageUpsertWithWhereUniqueWithoutWorkerInput[]
+    createMany?: CageCreateManyWorkerInputEnvelope
+    set?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    disconnect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    delete?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    connect?: CageWhereUniqueInput | CageWhereUniqueInput[]
+    update?: CageUpdateWithWhereUniqueWithoutWorkerInput | CageUpdateWithWhereUniqueWithoutWorkerInput[]
+    updateMany?: CageUpdateManyWithWhereWithoutWorkerInput | CageUpdateManyWithWhereWithoutWorkerInput[]
+    deleteMany?: CageScalarWhereInput | CageScalarWhereInput[]
   }
 
   export type ChickenCreateNestedOneWithoutEggEntriesInput = {
@@ -8134,6 +6877,44 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8177,12 +6958,12 @@ export namespace Prisma {
   }
 
   export type CageCreateWithoutChickenInput = {
-    workers?: WorkerCageCreateNestedManyWithoutCageInput
+    worker?: WorkerCreateNestedOneWithoutCagesInput
   }
 
   export type CageUncheckedCreateWithoutChickenInput = {
     id?: number
-    workers?: WorkerCageUncheckedCreateNestedManyWithoutCageInput
+    workerId?: number | null
   }
 
   export type CageCreateOrConnectWithoutChickenInput = {
@@ -8225,12 +7006,12 @@ export namespace Prisma {
   }
 
   export type CageUpdateWithoutChickenInput = {
-    workers?: WorkerCageUpdateManyWithoutCageNestedInput
+    worker?: WorkerUpdateOneWithoutCagesNestedInput
   }
 
   export type CageUncheckedUpdateWithoutChickenInput = {
     id?: IntFieldUpdateOperationsInput | number
-    workers?: WorkerCageUncheckedUpdateManyWithoutCageNestedInput
+    workerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type EggEntryUpsertWithWhereUniqueWithoutChickenInput = {
@@ -8265,6 +7046,7 @@ export namespace Prisma {
     age: number
     eggRate: number
     breed: string
+    cageId: number
     eggEntries?: EggEntryCreateNestedManyWithoutChickenInput
   }
 
@@ -8274,121 +7056,13 @@ export namespace Prisma {
     age: number
     eggRate: number
     breed: string
+    cageId: number
     eggEntries?: EggEntryUncheckedCreateNestedManyWithoutChickenInput
   }
 
   export type ChickenCreateOrConnectWithoutCageInput = {
     where: ChickenWhereUniqueInput
     create: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput>
-  }
-
-  export type ChickenCreateManyCageInputEnvelope = {
-    data: ChickenCreateManyCageInput | ChickenCreateManyCageInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type WorkerCageCreateWithoutCageInput = {
-    worker: WorkerCreateNestedOneWithoutCagesInput
-  }
-
-  export type WorkerCageUncheckedCreateWithoutCageInput = {
-    workerId: number
-  }
-
-  export type WorkerCageCreateOrConnectWithoutCageInput = {
-    where: WorkerCageWhereUniqueInput
-    create: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput>
-  }
-
-  export type WorkerCageCreateManyCageInputEnvelope = {
-    data: WorkerCageCreateManyCageInput | WorkerCageCreateManyCageInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ChickenUpsertWithWhereUniqueWithoutCageInput = {
-    where: ChickenWhereUniqueInput
-    update: XOR<ChickenUpdateWithoutCageInput, ChickenUncheckedUpdateWithoutCageInput>
-    create: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput>
-  }
-
-  export type ChickenUpdateWithWhereUniqueWithoutCageInput = {
-    where: ChickenWhereUniqueInput
-    data: XOR<ChickenUpdateWithoutCageInput, ChickenUncheckedUpdateWithoutCageInput>
-  }
-
-  export type ChickenUpdateManyWithWhereWithoutCageInput = {
-    where: ChickenScalarWhereInput
-    data: XOR<ChickenUpdateManyMutationInput, ChickenUncheckedUpdateManyWithoutCageInput>
-  }
-
-  export type ChickenScalarWhereInput = {
-    AND?: ChickenScalarWhereInput | ChickenScalarWhereInput[]
-    OR?: ChickenScalarWhereInput[]
-    NOT?: ChickenScalarWhereInput | ChickenScalarWhereInput[]
-    id?: IntFilter<"Chicken"> | number
-    weight?: FloatFilter<"Chicken"> | number
-    age?: IntFilter<"Chicken"> | number
-    eggRate?: FloatFilter<"Chicken"> | number
-    breed?: StringFilter<"Chicken"> | string
-    cageId?: IntFilter<"Chicken"> | number
-  }
-
-  export type WorkerCageUpsertWithWhereUniqueWithoutCageInput = {
-    where: WorkerCageWhereUniqueInput
-    update: XOR<WorkerCageUpdateWithoutCageInput, WorkerCageUncheckedUpdateWithoutCageInput>
-    create: XOR<WorkerCageCreateWithoutCageInput, WorkerCageUncheckedCreateWithoutCageInput>
-  }
-
-  export type WorkerCageUpdateWithWhereUniqueWithoutCageInput = {
-    where: WorkerCageWhereUniqueInput
-    data: XOR<WorkerCageUpdateWithoutCageInput, WorkerCageUncheckedUpdateWithoutCageInput>
-  }
-
-  export type WorkerCageUpdateManyWithWhereWithoutCageInput = {
-    where: WorkerCageScalarWhereInput
-    data: XOR<WorkerCageUpdateManyMutationInput, WorkerCageUncheckedUpdateManyWithoutCageInput>
-  }
-
-  export type WorkerCageScalarWhereInput = {
-    AND?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
-    OR?: WorkerCageScalarWhereInput[]
-    NOT?: WorkerCageScalarWhereInput | WorkerCageScalarWhereInput[]
-    workerId?: IntFilter<"WorkerCage"> | number
-    cageId?: IntFilter<"WorkerCage"> | number
-  }
-
-  export type WorkerCageCreateWithoutWorkerInput = {
-    cage: CageCreateNestedOneWithoutWorkersInput
-  }
-
-  export type WorkerCageUncheckedCreateWithoutWorkerInput = {
-    cageId: number
-  }
-
-  export type WorkerCageCreateOrConnectWithoutWorkerInput = {
-    where: WorkerCageWhereUniqueInput
-    create: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type WorkerCageCreateManyWorkerInputEnvelope = {
-    data: WorkerCageCreateManyWorkerInput | WorkerCageCreateManyWorkerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type WorkerCageUpsertWithWhereUniqueWithoutWorkerInput = {
-    where: WorkerCageWhereUniqueInput
-    update: XOR<WorkerCageUpdateWithoutWorkerInput, WorkerCageUncheckedUpdateWithoutWorkerInput>
-    create: XOR<WorkerCageCreateWithoutWorkerInput, WorkerCageUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type WorkerCageUpdateWithWhereUniqueWithoutWorkerInput = {
-    where: WorkerCageWhereUniqueInput
-    data: XOR<WorkerCageUpdateWithoutWorkerInput, WorkerCageUncheckedUpdateWithoutWorkerInput>
-  }
-
-  export type WorkerCageUpdateManyWithWhereWithoutWorkerInput = {
-    where: WorkerCageScalarWhereInput
-    data: XOR<WorkerCageUpdateManyMutationInput, WorkerCageUncheckedUpdateManyWithoutWorkerInput>
   }
 
   export type WorkerCreateWithoutCagesInput = {
@@ -8407,18 +7081,34 @@ export namespace Prisma {
     create: XOR<WorkerCreateWithoutCagesInput, WorkerUncheckedCreateWithoutCagesInput>
   }
 
-  export type CageCreateWithoutWorkersInput = {
-    chicken?: ChickenCreateNestedManyWithoutCageInput
+  export type ChickenUpsertWithoutCageInput = {
+    update: XOR<ChickenUpdateWithoutCageInput, ChickenUncheckedUpdateWithoutCageInput>
+    create: XOR<ChickenCreateWithoutCageInput, ChickenUncheckedCreateWithoutCageInput>
+    where?: ChickenWhereInput
   }
 
-  export type CageUncheckedCreateWithoutWorkersInput = {
-    id?: number
-    chicken?: ChickenUncheckedCreateNestedManyWithoutCageInput
+  export type ChickenUpdateToOneWithWhereWithoutCageInput = {
+    where?: ChickenWhereInput
+    data: XOR<ChickenUpdateWithoutCageInput, ChickenUncheckedUpdateWithoutCageInput>
   }
 
-  export type CageCreateOrConnectWithoutWorkersInput = {
-    where: CageWhereUniqueInput
-    create: XOR<CageCreateWithoutWorkersInput, CageUncheckedCreateWithoutWorkersInput>
+  export type ChickenUpdateWithoutCageInput = {
+    weight?: FloatFieldUpdateOperationsInput | number
+    age?: IntFieldUpdateOperationsInput | number
+    eggRate?: FloatFieldUpdateOperationsInput | number
+    breed?: StringFieldUpdateOperationsInput | string
+    cageId?: IntFieldUpdateOperationsInput | number
+    eggEntries?: EggEntryUpdateManyWithoutChickenNestedInput
+  }
+
+  export type ChickenUncheckedUpdateWithoutCageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    weight?: FloatFieldUpdateOperationsInput | number
+    age?: IntFieldUpdateOperationsInput | number
+    eggRate?: FloatFieldUpdateOperationsInput | number
+    breed?: StringFieldUpdateOperationsInput | string
+    cageId?: IntFieldUpdateOperationsInput | number
+    eggEntries?: EggEntryUncheckedUpdateManyWithoutChickenNestedInput
   }
 
   export type WorkerUpsertWithoutCagesInput = {
@@ -8443,24 +7133,48 @@ export namespace Prisma {
     salary?: FloatFieldUpdateOperationsInput | number
   }
 
-  export type CageUpsertWithoutWorkersInput = {
-    update: XOR<CageUpdateWithoutWorkersInput, CageUncheckedUpdateWithoutWorkersInput>
-    create: XOR<CageCreateWithoutWorkersInput, CageUncheckedCreateWithoutWorkersInput>
-    where?: CageWhereInput
+  export type CageCreateWithoutWorkerInput = {
+    chicken?: ChickenCreateNestedOneWithoutCageInput
   }
 
-  export type CageUpdateToOneWithWhereWithoutWorkersInput = {
-    where?: CageWhereInput
-    data: XOR<CageUpdateWithoutWorkersInput, CageUncheckedUpdateWithoutWorkersInput>
+  export type CageUncheckedCreateWithoutWorkerInput = {
+    id?: number
+    chickenId?: number | null
   }
 
-  export type CageUpdateWithoutWorkersInput = {
-    chicken?: ChickenUpdateManyWithoutCageNestedInput
+  export type CageCreateOrConnectWithoutWorkerInput = {
+    where: CageWhereUniqueInput
+    create: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput>
   }
 
-  export type CageUncheckedUpdateWithoutWorkersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    chicken?: ChickenUncheckedUpdateManyWithoutCageNestedInput
+  export type CageCreateManyWorkerInputEnvelope = {
+    data: CageCreateManyWorkerInput | CageCreateManyWorkerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CageUpsertWithWhereUniqueWithoutWorkerInput = {
+    where: CageWhereUniqueInput
+    update: XOR<CageUpdateWithoutWorkerInput, CageUncheckedUpdateWithoutWorkerInput>
+    create: XOR<CageCreateWithoutWorkerInput, CageUncheckedCreateWithoutWorkerInput>
+  }
+
+  export type CageUpdateWithWhereUniqueWithoutWorkerInput = {
+    where: CageWhereUniqueInput
+    data: XOR<CageUpdateWithoutWorkerInput, CageUncheckedUpdateWithoutWorkerInput>
+  }
+
+  export type CageUpdateManyWithWhereWithoutWorkerInput = {
+    where: CageScalarWhereInput
+    data: XOR<CageUpdateManyMutationInput, CageUncheckedUpdateManyWithoutWorkerInput>
+  }
+
+  export type CageScalarWhereInput = {
+    AND?: CageScalarWhereInput | CageScalarWhereInput[]
+    OR?: CageScalarWhereInput[]
+    NOT?: CageScalarWhereInput | CageScalarWhereInput[]
+    id?: IntFilter<"Cage"> | number
+    chickenId?: IntNullableFilter<"Cage"> | number | null
+    workerId?: IntNullableFilter<"Cage"> | number | null
   }
 
   export type ChickenCreateWithoutEggEntriesInput = {
@@ -8468,7 +7182,8 @@ export namespace Prisma {
     age: number
     eggRate: number
     breed: string
-    cage: CageCreateNestedOneWithoutChickenInput
+    cageId: number
+    cage?: CageCreateNestedOneWithoutChickenInput
   }
 
   export type ChickenUncheckedCreateWithoutEggEntriesInput = {
@@ -8478,6 +7193,7 @@ export namespace Prisma {
     eggRate: number
     breed: string
     cageId: number
+    cage?: CageUncheckedCreateNestedOneWithoutChickenInput
   }
 
   export type ChickenCreateOrConnectWithoutEggEntriesInput = {
@@ -8501,7 +7217,8 @@ export namespace Prisma {
     age?: IntFieldUpdateOperationsInput | number
     eggRate?: FloatFieldUpdateOperationsInput | number
     breed?: StringFieldUpdateOperationsInput | string
-    cage?: CageUpdateOneRequiredWithoutChickenNestedInput
+    cageId?: IntFieldUpdateOperationsInput | number
+    cage?: CageUpdateOneWithoutChickenNestedInput
   }
 
   export type ChickenUncheckedUpdateWithoutEggEntriesInput = {
@@ -8511,6 +7228,7 @@ export namespace Prisma {
     eggRate?: FloatFieldUpdateOperationsInput | number
     breed?: StringFieldUpdateOperationsInput | string
     cageId?: IntFieldUpdateOperationsInput | number
+    cage?: CageUncheckedUpdateOneWithoutChickenNestedInput
   }
 
   export type EggEntryCreateManyChickenInput = {
@@ -8540,69 +7258,23 @@ export namespace Prisma {
     type?: EnumEggTypeFieldUpdateOperationsInput | $Enums.EggType
   }
 
-  export type ChickenCreateManyCageInput = {
+  export type CageCreateManyWorkerInput = {
     id?: number
-    weight: number
-    age: number
-    eggRate: number
-    breed: string
+    chickenId?: number | null
   }
 
-  export type WorkerCageCreateManyCageInput = {
-    workerId: number
+  export type CageUpdateWithoutWorkerInput = {
+    chicken?: ChickenUpdateOneWithoutCageNestedInput
   }
 
-  export type ChickenUpdateWithoutCageInput = {
-    weight?: FloatFieldUpdateOperationsInput | number
-    age?: IntFieldUpdateOperationsInput | number
-    eggRate?: FloatFieldUpdateOperationsInput | number
-    breed?: StringFieldUpdateOperationsInput | string
-    eggEntries?: EggEntryUpdateManyWithoutChickenNestedInput
-  }
-
-  export type ChickenUncheckedUpdateWithoutCageInput = {
+  export type CageUncheckedUpdateWithoutWorkerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    age?: IntFieldUpdateOperationsInput | number
-    eggRate?: FloatFieldUpdateOperationsInput | number
-    breed?: StringFieldUpdateOperationsInput | string
-    eggEntries?: EggEntryUncheckedUpdateManyWithoutChickenNestedInput
+    chickenId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ChickenUncheckedUpdateManyWithoutCageInput = {
+  export type CageUncheckedUpdateManyWithoutWorkerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    age?: IntFieldUpdateOperationsInput | number
-    eggRate?: FloatFieldUpdateOperationsInput | number
-    breed?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type WorkerCageUpdateWithoutCageInput = {
-    worker?: WorkerUpdateOneRequiredWithoutCagesNestedInput
-  }
-
-  export type WorkerCageUncheckedUpdateWithoutCageInput = {
-    workerId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type WorkerCageUncheckedUpdateManyWithoutCageInput = {
-    workerId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type WorkerCageCreateManyWorkerInput = {
-    cageId: number
-  }
-
-  export type WorkerCageUpdateWithoutWorkerInput = {
-    cage?: CageUpdateOneRequiredWithoutWorkersNestedInput
-  }
-
-  export type WorkerCageUncheckedUpdateWithoutWorkerInput = {
-    cageId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type WorkerCageUncheckedUpdateManyWithoutWorkerInput = {
-    cageId?: IntFieldUpdateOperationsInput | number
+    chickenId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

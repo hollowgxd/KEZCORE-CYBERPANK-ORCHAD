@@ -8,6 +8,7 @@ type Chicken = {
   age: number
   eggRate: number
   breed: string
+  cageId: number
   cage: {
     id: number
     name: string
@@ -21,6 +22,8 @@ const ChickenInfo = () => {
   const [selectedBreed, setSelectedBreed] = useState<string>('')
   const visibleChickens = selectedBreed ? filteredChickens : chickens
   const [averageEggRateByCage, setAverageEggRateByCage] = useState<number | null>(null)
+  const [cageOccupiedWarning, setCageOccupiedWarning] = useState<string | null>(null)
+
 
   const [formData, setFormData] = useState({
     id: null as number | null,
@@ -42,7 +45,11 @@ const ChickenInfo = () => {
   const [averageResult, setAverageResult] = useState<number | null>(null)
   
   const fetchAverageEggs = async () => {
-    if (!avgWeight && !avgAge) return
+    if (!avgWeight && !avgAge) {
+  setAverageResult(null);
+  return;
+}
+
   
     const params = new URLSearchParams()
     if (avgWeight) params.append('weight', avgWeight)
@@ -73,8 +80,9 @@ const ChickenInfo = () => {
       const res = await fetch('/api/chickens')
       const data = await res.json()
       setChickens(data)
-    } catch (error) {
-      console.error('Ошибка при загрузке кур:', error)
+    } catch (error: any) {
+  console.error('Ошибка сервера:', error?.message || error)
+  return Response.json({ error: error?.message || 'Internal Server Error' }, { status: 500 })
     } finally {
       setLoading(false)
     }
@@ -88,33 +96,58 @@ const ChickenInfo = () => {
       setFilteredChickens(chickens) // Если фильтра нет, показываем всех
     }
   }
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
 
-    const method = isEditing ? 'PUT' : 'POST'
-    const url = '/api/chickens'
-    const body = {
-      ...formData,
-      weight: parseFloat(formData.weight),
-      age: parseInt(formData.age),
-      eggRate: parseFloat(formData.eggRate),
-      cageId: parseInt(formData.cageId),
-    }
+  const method = isEditing ? 'PUT' : 'POST'
+  const url = '/api/chickens'
+  const body = {
+    ...formData,
+    weight: parseFloat(formData.weight),
+    age: parseInt(formData.age),
+    eggRate: parseFloat(formData.eggRate),
+    cageId: parseInt(formData.cageId),
+  }
+  const isCageOccupied = chickens.some((chicken) => {
+    return chicken.cageId === body.cageId && chicken.id !== formData.id
+  })
 
+  if (isCageOccupied) {
+    setCageOccupiedWarning(`Клетка #${body.cageId} уже занята другой курицей.`)
+    return
+  }
+
+  setCageOccupiedWarning(null)
+  try {
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 
-    if (res.ok) {
-      await fetchChickens()
-      setFormData({ id: null, weight: '', age: '', eggRate: '', breed: '', cageId: '' })
-      setIsEditing(false)
-    } else {
-      console.error('Ошибка при отправке данных')
-    }
+    if (!res.ok) throw new Error('Ошибка при создании курицы')
+    const createdChicken = await res.json()
+
+    // Обновляем клетку, связываем с курицей
+    const cageUpdateRes = await fetch('/api/cages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cageId: parseInt(formData.cageId),
+        chickenId: createdChicken.id,
+      }),
+    })
+
+    if (!cageUpdateRes.ok) throw new Error('Ошибка при обновлении клетки')
+
+    await fetchChickens()
+    setFormData({ id: null, weight: '', age: '', eggRate: '', breed: '', cageId: '' })
+    setIsEditing(false)
+  } catch (error) {
+    console.error(error)
   }
+}
+
 
   const handleEdit = (chicken: Chicken) => {
     setFormData({
@@ -123,7 +156,7 @@ const ChickenInfo = () => {
       age: chicken.age.toString(),
       eggRate: chicken.eggRate.toString(),
       breed: chicken.breed,
-      cageId: chicken.cage.id.toString(),
+      cageId: chicken.cageId.toString(),
     })
     setIsEditing(true)
   }
@@ -220,6 +253,12 @@ const ChickenInfo = () => {
             {isEditing ? 'Обновить' : 'Добавить'}
           </button>
         </form>
+        {cageOccupiedWarning && (
+  <div className="text-red-400 font-semibold bg-gray-900 p-2 rounded border border-red-600 mb-4">
+    ⚠ {cageOccupiedWarning}
+  </div>
+)}
+
         <div className="mb-6 w-full">
   <h3 className="text-xl font-semibold text-red-400 mb-4 ">Фильтр по породам</h3>
   <div className="grid grid-cols-4 gap-4">
@@ -262,9 +301,10 @@ const ChickenInfo = () => {
                   className="text-sm text-gray-300 border border-red-600 rounded-lg p-3 flex justify-between items-center"
                 >
                   <p>
-                    <span className="text-red-400 font-semibold">#{index + 1}</span> — порода{' '}
+                    <span className="text-red-400 font-semibold">#{chicken.id + 1}</span> — порода{' '}
                     <span className="text-red-500 text-xl">{chicken.breed}</span>, {chicken.age} дней,{' '}
-                    {chicken.weight} кг, {chicken.eggRate} яиц/месяц, клетка #{chicken.cage.id}
+                    {chicken.weight} кг, {chicken.eggRate} яиц/месяц, клетка #{chicken.cage?.id || chicken.cageId || 'не назначена'}
+
                   </p>
                   <div className="flex gap-2">
                     <button

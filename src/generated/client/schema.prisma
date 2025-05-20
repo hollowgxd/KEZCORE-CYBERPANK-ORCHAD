@@ -20,7 +20,7 @@ model Chicken {
   age        Int
   eggRate    Float
   breed      String
-  cage       Cage       @relation(fields: [cageId], references: [id])
+  cage       Cage?      @relation("ChickenCage")
   cageId     Int
   eggEntries EggEntry[]
 
@@ -28,30 +28,22 @@ model Chicken {
 }
 
 model Cage {
-  id      Int          @id @default(autoincrement())
-  chicken Chicken[] // может быть пустой
-  workers WorkerCage[]
+  id        Int      @id @default(autoincrement())
+  chicken   Chicken? @relation("ChickenCage", fields: [chickenId], references: [id])
+  chickenId Int?     @unique
+  worker    Worker?  @relation(fields: [workerId], references: [id])
+  workerId  Int?
 
   @@map("cages")
 }
 
 model Worker {
-  id     Int          @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
   name   String
   salary Float
-  cages  WorkerCage[]
+  cages  Cage[]
 
   @@map("workers")
-}
-
-model WorkerCage {
-  worker   Worker @relation(fields: [workerId], references: [id])
-  workerId Int
-  cage     Cage   @relation(fields: [cageId], references: [id])
-  cageId   Int
-
-  @@id([workerId, cageId])
-  @@map("worker_cages")
 }
 
 model EggEntry {
