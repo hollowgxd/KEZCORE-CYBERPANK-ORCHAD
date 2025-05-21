@@ -3,9 +3,45 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap'); */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* дефолтные (очень тёмные) переменные */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #ff0000; /* не используется в бизнес-теме */
 }
+
+/* наша бизнес-тёмная тема */
+:root {
+  --background: white;
+  --foreground: black;
+}
+
+:root[data-theme="business"] {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease-in-out 0.1s;
+  background: var(--background); 
+  background-image: url('/zloy/cyberorchad.webp'); /* Покрывает весь экран */
+  background-position: center center; /* Центрирует изображение */
+  color: var(--foreground); /* Сохраняем цвет текста */
+  font-family: var(--font-sans);;
+}
+
+
+/* примеры использования */
+.btn-accent {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+.btn-accent:hover {
+  filter: brightness(1.1);
+}
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground); 
@@ -24,13 +60,7 @@
   }
 }
 
-body {
-  background: var(--background); 
-  background-image: url('/zloy/cyberorchad.webp'); /* Покрывает весь экран */
-  background-position: center center; /* Центрирует изображение */
-  color: var(--foreground); /* Сохраняем цвет текста */
-  font-family: var(--font-sans);;
-}
+
 
 @layer utilities {
   @keyframes pulse-glow {

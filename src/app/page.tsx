@@ -6,7 +6,7 @@ import Tab from './components/Tab'; // Это компонент вкладки
 import ChickenInfo from './components/ChickenInfo'; // Информация о курицах
 import CageInfo from './components/CageInfo'; // Информация о клетках
 import WorkerInfo from './components/WorkerInfo'; // Информация о работниках
-
+import { ThemeProvider } from 'next-themes'
 const Page = () => {
   const [activeTab, setActiveTab] = useState<string>('chickens');
 
@@ -24,6 +24,7 @@ const Page = () => {
   };
 
   return (
+    <ThemeProvider attribute="class">
     <div className="min-h-screen bg-url(cyberorchad) text-red-400 font-mono ">
       <header className="bg-black text-red-400 py-4 px-8 border-b-2 border-red-600">
         <div className="container mx-auto flex justify-center space-x-8">
@@ -37,6 +38,7 @@ const Page = () => {
         {renderTabContent()}
       </main>
     </div>
+    </ThemeProvider>
   );
 };
 

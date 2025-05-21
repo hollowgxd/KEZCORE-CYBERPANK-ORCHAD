@@ -16,6 +16,13 @@ type Chicken = {
 }
 
 const ChickenInfo = () => {
+    const toggleTheme = () => {
+    const html = document.documentElement;
+    const current = html.dataset.theme;
+    const next = current === 'business' ? 'default' : 'business';
+    html.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  };
   const [chickens, setChickens] = useState<Chicken[]>([])
   const [loading, setLoading] = useState(true)
   const [filteredChickens, setFilteredChickens] = useState<Chicken[]>([])
@@ -181,7 +188,11 @@ const handleSubmit = async (e: React.FormEvent) => {
   return (
     <div className="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-12 px-2 lg:px-0 max-w-screen-2xl mx-auto">
       {/* Картинка слева */}
-      <div className="bg-black text-red-400 p-4 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex justify-center items-center max-h-[467px] overflow-hidden">
+      <div
+        className="bg-black text-red-400 p-4 rounded-lg border-2 border-red-600 animate-pulse-glow-delayed flex justify-center items-center max-h-[467px] overflow-hidden cursor-pointer"
+        onClick={toggleTheme}
+      >
+        
         <img
           src="/zloy/cyberchickinit.webp"
           alt="Петушок"

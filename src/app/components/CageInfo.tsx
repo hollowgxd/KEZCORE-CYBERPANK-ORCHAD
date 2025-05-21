@@ -145,7 +145,7 @@ const handleAddCage = async () => {
       </label>
       <button
         onClick={handleAddCage}
-        className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600"
+        className="mt-4 bg-red-700 text-white px-4 py-2 rounded bg-red-700 hover:bg-red-800 text-white transition-all duration-200 transform font-semibold"
       >
         Подтвердить добавление
       </button>
