@@ -25,14 +25,8 @@ const Page = () => {
 
   return (
     <ThemeProvider attribute="class">
-    <div className="min-h-screen bg-url(cyberorchad) text-red-400 font-mono ">
-      <header className="bg-black text-red-400 py-4 px-8 border-b-2 border-red-600">
-        <div className="container mx-auto flex justify-center space-x-8">
-          <Tab label="Курицы" isActive={activeTab === 'chickens'} onClick={() => setActiveTab('chickens')} />
-          <Tab label="Клетки" isActive={activeTab === 'cages'} onClick={() => setActiveTab('cages')} />
-          <Tab label="Работники" isActive={activeTab === 'workers'} onClick={() => setActiveTab('workers')} />
-        </div>
-      </header>
+    <div className="min-h-screen bg-url(cyberorchad) text-green-400 font-mono ">
+      
       
       <main className="container mx-auto p-6">
         {renderTabContent()}
